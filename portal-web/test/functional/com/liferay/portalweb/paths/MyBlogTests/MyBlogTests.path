@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>MyBlogTests</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MyBlogTests</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>BUTTON_EDIT_PAGE</td>
+	<td>//div[contains(@class, "control-menu-nav-category")]//ul//li//span//a[contains(@class, 'taglib-icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NO_ENTRIES_MESSAGE</td>
+	<td>//div[contains(@class,'mt-4 taglib-empty-result-message')]//div[contains(., 'No entries were found')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
