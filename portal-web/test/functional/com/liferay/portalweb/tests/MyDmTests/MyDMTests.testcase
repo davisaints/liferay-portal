@@ -60,4 +60,45 @@ definition {
 		}
 	}
 
+	@description = "Can Delete a Documents and Media"
+	@priority = "5"
+	test CanDeleteDM {
+		task ("Go to Documents and Media and add two document") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.addCP(
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document1 Title");
+
+			DMDocument.addCP(
+			dmDocumentFile = "Document_2.txt",
+			dmDocumentTitle = "DM Document2 Title");
+		}
+		
+		task ("Add widget and publish") {
+			Navigator.gotoPage(pageName = "Home");
+
+			Click(locator1 = "MyDMTests#BUTTON_EDIT_PAGE");
+
+			PageEditor.addWidgetViaKeyboard(
+				categoryName = "Highlighted",
+				widgetName = "Documents and Media");
+		}
+
+		task ("Go to Documents and Media and delete DM Document1") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.deleteCP(dmDocumentTitle = "DM Document1 Title");
+		}
+
+		task ("Assert if Document1 is deleted and Document2 is present ") {
+			AssertElementNotPresent(
+			key_dmDocumentTitle = "DM Document1 Title",
+			locator1 = "DocumentsAndMedia#PAGE_DOCUMENT_TITLE");
+
+			AssertElementPresent(
+				key_dmDocumentTitle = "DM Document2 Title",
+				locator1 = "DocumentsAndMedia#PAGE_DOCUMENT_TITLE");
+		}
+	}
 }
