@@ -34,7 +34,7 @@ definition {
 
 	@description = "Can Create a Documents and Media"
 	@priority = "5"
-	test CanCreateDM {	
+	test CanCreateDM {
 		task ("Go to Documents and Media and add new document") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -42,7 +42,7 @@ definition {
 				dmDocumentFile = "Document_1.txt",
 				dmDocumentTitle = "DM Document Title");
 		}
-		
+
 		task ("Add widget and publish") {
 			Navigator.gotoPage(pageName = "Home");
 
@@ -67,14 +67,14 @@ definition {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 			DMDocument.addCP(
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document1 Title");
+				dmDocumentFile = "Document_1.txt",
+				dmDocumentTitle = "DM Document1 Title");
 
 			DMDocument.addCP(
-			dmDocumentFile = "Document_2.txt",
-			dmDocumentTitle = "DM Document2 Title");
+				dmDocumentFile = "Document_2.txt",
+				dmDocumentTitle = "DM Document2 Title");
 		}
-		
+
 		task ("Add widget and publish") {
 			Navigator.gotoPage(pageName = "Home");
 
@@ -93,8 +93,8 @@ definition {
 
 		task ("Assert if Document1 is deleted and Document2 is present ") {
 			AssertElementNotPresent(
-			key_dmDocumentTitle = "DM Document1 Title",
-			locator1 = "DocumentsAndMedia#PAGE_DOCUMENT_TITLE");
+				key_dmDocumentTitle = "DM Document1 Title",
+				locator1 = "DocumentsAndMedia#PAGE_DOCUMENT_TITLE");
 
 			AssertElementPresent(
 				key_dmDocumentTitle = "DM Document2 Title",
@@ -109,12 +109,12 @@ definition {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 			DMDocument.addCP(
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document1 Title");
+				dmDocumentFile = "Document_1.txt",
+				dmDocumentTitle = "DM Document1 Title");
 
 			DMDocument.addCP(
-			dmDocumentFile = "Document_2.txt",
-			dmDocumentTitle = "DM Document2 Title");
+				dmDocumentFile = "Document_2.txt",
+				dmDocumentTitle = "DM Document2 Title");
 		}
 
 		task ("Add widget and publish") {
@@ -137,7 +137,45 @@ definition {
 			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.txt");
 
 			DMDocument.assertNoFileNameFromTempFolder(fileName = "Document_2.txt");
-		}	
+		}
+	}
+
+	@description = "Can Edit a Documents and Media"
+	@priority = "5"
+	test CanEditDM {
+		task ("Go to Documents and Media and add new docuemt") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.addCP(
+				dmDocumentFile = "Document_4.jpg",
+				dmDocumentTitle = "DM Document JPG");
+		}
+
+		task ("Add widget and publish") {
+			Navigator.gotoPage(pageName = "Home");
+
+			Click(locator1 = "MyDMTests#BUTTON_EDIT_PAGE");
+
+			PageEditor.addWidgetViaKeyboard(
+				categoryName = "Highlighted",
+				widgetName = "Documents and Media");
+		}
+
+		task ("Go to Documents and Media and change DM name and the file") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.editCP(
+				dmDocumentFileEdit = "Commerce_Black.jpg",
+				dmDocumentFileNameEdit = "Commerce_Black.jpg",
+				dmDocumentTitle = "DM Document JPG",
+				dmDocumentTitleEdit = "DM Document JPG Edited");
+		}
+
+		task ("Refresh page and assert edited document") {
+			Refresh();
+
+			DMDocument.viewEditCP(dmDocumentTitleEdit = "DM Document JPG Edited");
+		}
 	}
 
 }
