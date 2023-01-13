@@ -1,0 +1,12 @@
+definition {
+
+	macro assertEntryDeleted {
+		var key_entryContent = "${entryContent}";
+		var key_entryTitle = "${entryTitle}";
+
+		AssertElementNotPresent(
+			locator1 = "BlogsEntry#TITLE",
+			value1 = "${entryTitle}");
+	}
+
+}
