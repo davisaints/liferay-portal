@@ -1,0 +1,66 @@
+@component-name = "portal-lima"
+definition {
+
+	property testray.main.component.name = "Blogs";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
+
+			PagesAdmin.tearDownCP();
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page");
+		}
+	}
+
+	@description = "Can Create a Blog"
+	@priority = "5"
+	test CanCreateBlog {
+		task ("Add widget") {
+			Click(locator1 = "MyBlogTests#BUTTON_EDIT_PAGE");
+
+			if (IsElementNotPresent(locator1 = "MyBlogTests#NO_ENTRIES_MESSAGE")) {
+				PageEditor.addWidgetViaKeyboard(
+					categoryName = "Collaboration",
+					widgetName = "Blogs");
+			}
+		}
+
+		task ("Add blog entry") {
+			Blogs.addEntry(
+				entryContent = "Blogs Entry Content",
+				entrySubtitle = "Blogs Entry Subtitle",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		task ("Assert success message and entry") {
+			Alert.viewSuccessMessage();
+
+			BlogsNavigator.gotoEntryPG(
+				entryContent = "Blogs Entry Content",
+				entrySubtitle = "Blogs Entry Subtitle",
+				entryTitle = "Blogs Entry Title");
+
+			BlogsEntry.viewEntryPG(
+				entryContent = "Blogs Entry Content",
+				entrySubtitle = "Blogs Entry Subtitle",
+				entryTitle = "Blogs Entry Title");
+		}
+	}
+
+}
