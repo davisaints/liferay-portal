@@ -101,4 +101,43 @@ definition {
 				locator1 = "DocumentsAndMedia#PAGE_DOCUMENT_TITLE");
 		}
 	}
+
+	@description = "Can Download a Documents and Media"
+	@priority = "5"
+	test CanDownloadDM {
+		task ("Go to Documents and Media and add two document") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.addCP(
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document1 Title");
+
+			DMDocument.addCP(
+			dmDocumentFile = "Document_2.txt",
+			dmDocumentTitle = "DM Document2 Title");
+		}
+
+		task ("Add widget and publish") {
+			Navigator.gotoPage(pageName = "Home");
+
+			Click(locator1 = "MyDMTests#BUTTON_EDIT_PAGE");
+
+			PageEditor.addWidgetViaKeyboard(
+				categoryName = "Highlighted",
+				widgetName = "Documents and Media");
+		}
+
+		task ("Go to Documents and Media and download DM Document1") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.downloadPG(dmDocumentTitle = "DM Document1 Title");
+		}
+
+		task ("Assert if Document1 	was downloaded and Document2 was not downloaded ") {
+			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.txt");
+
+			DMDocument.assertNoFileNameFromTempFolder(fileName = "Document_2.txt");
+		}	
+	}
+
 }
