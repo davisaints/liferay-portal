@@ -1,0 +1,63 @@
+@component-name = "portal-document-management"
+definition {
+
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			PagesAdmin.tearDownCP();
+		}
+	}
+
+	@description = "Can Create a Documents and Media"
+	@priority = "5"
+	test CanCreateDM {	
+		task ("Go to Documents and Media and add new document") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMDocument.addCP(
+				dmDocumentFile = "Document_1.txt",
+				dmDocumentTitle = "DM Document Title");
+		}
+		
+		task ("Add widget and publish") {
+			Navigator.gotoPage(pageName = "Home");
+
+			Click(locator1 = "MyDMTests#BUTTON_EDIT_PAGE");
+
+			PageEditor.addWidgetViaKeyboard(
+				categoryName = "Highlighted",
+				widgetName = "Documents and Media");
+
+			PortletEntry.publish();
+		}
+
+		task ("View text document") {
+			DMDocument.viewPG(dmDocumentTitle = "DM Document Title");
+		}
+	}
+
+}
