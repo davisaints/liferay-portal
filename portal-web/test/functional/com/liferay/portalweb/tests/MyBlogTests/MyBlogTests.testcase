@@ -156,4 +156,47 @@ definition {
 		}
 	}
 
+	@description = "Can Search Blogs"
+	@priority = "5"
+	test CanSearchBlogs {
+		task ("Create a Blog Page and blog widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Blogs Page",
+				widgetName = "Blogs");
+		}
+
+		task ("Go to Blogs Page and add two blog entries") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			Blogs.addEntry(
+				entryContent = "AAA",
+				entryTitle = "AAA");
+
+			Blogs.addEntry(
+				entryContent = "BBB",
+				entryTitle = "BBB");
+		}
+
+		task ("Perform the search and validate the only item found") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+			BlogsEntry.searchCP(
+				entryContent = "AAA",
+				entrySearchTerm = "AAA",
+				entryTitle = "AAA");
+
+			Blogs.viewEntryTitle(entryTitle = "AAA");
+		}
+
+		task ("Validate that the second entry was not displayed ") {
+			Blogs.viewEntryNotPresent(entryTitle = "BBB");
+		}
+	}
+
 }
