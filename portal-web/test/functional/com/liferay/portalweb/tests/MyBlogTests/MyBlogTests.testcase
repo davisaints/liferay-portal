@@ -89,4 +89,26 @@ definition {
 		}
 	}
 
+	@description = "Can Edit a Blog"
+	@priority = "5"
+	test CanEditBlog {
+		task ("Go to Blogs Page and edit blog entry") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			Blogs.editEntryPG(
+				entryContent = "Blogs Entry1 Content",
+				entryContentEdit = "Blogs Entry1 Content Edit",
+				entryTitle = "Blogs Entry1 Title",
+				entryTitleEdit = "Blogs Entry1 Title Edit");
+		}
+
+		task ("Go to Blogs Page and validate edit") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			BlogsEntry.viewPG(
+				entryContent = "Blogs Entry1 Content Edit",
+				entryTitle = "Blogs Entry1 Title Edit");
+		}
+	}
+
 }
