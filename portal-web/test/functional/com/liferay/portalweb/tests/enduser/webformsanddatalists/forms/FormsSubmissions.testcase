@@ -2074,4 +2074,110 @@ definition {
 		AssertElementPresent(locator1 = "Form#SUCCESS_PAGE_ADD");
 	}
 
+	@description = "Verify if is not possible navigate through pages on public pages with matches validation error"
+	@priority = 5
+	test CannotNavigateThroughThePagesOnPublicPagesWithMatchesValidationError {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		task ("Given that the user creates a form with validation") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Form 1");
+
+			Form.editPageTitle(
+				formPageName = "Page 1",
+				formTitleNumber = 1);
+
+			Form.addTextField(fieldPositionNumber = 0);
+
+			Form.editFieldLabelMetal(fieldValue = "Text Field");
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			FormFields.enableSwitch(fieldName = "Validation");
+
+			FormFields.editValidation(
+				validationArgument = "Matches",
+				validationErrorMessage = "", 
+				validationInput = "^[A-Z].*");
+
+			Form.closeSidebar();
+
+			Form.addPage(formAddNewPageNumber = 1);
+
+			Form.editPageTitle(
+				formPageName = "Page 2",
+				formTitleNumber = 2);
+
+			Form.gotoAddField(
+				fieldType = "Numeric",
+				formPageNumber = 1);
+
+			Form.closeSidebar();
+
+			Form.addPage(formAddNewPageNumber = 2);
+
+			Form.editPageTitle(
+				formPageName = "Page 3",
+				formTitleNumber = 3);
+
+			Form.addTextField(formPageNumber = 2);
+
+			Form.publishForm();
+		}
+
+		task ("When creating a public page") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PagesAdmin.addPage(pageName = "Form Page");
+
+			Navigator.gotoPage(pageName = "Form Page");
+
+			Portlet.addPG(
+				pageName = "Form Page",
+				portletName = "Form");
+
+			FormPortletNavigator.gotoSelectForm();
+
+			FormPortletConfiguration.selectForm(formName = "Form 1");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the user is unable to navigate through pages with is a URL validation error") {
+			Navigator.gotoPage(pageName = "Form Page");
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "lowercase condition");
+
+			FormPortlet.viewValidationErrorMessage(validationErrorMessage = "This field is invalid.");
+
+			FormFields.editText(
+				fieldName = "Text",
+				fieldValue = "Uppercase condition");
+
+			Form.navigateFormPagesTopList(
+				formPageName = "Page 2",
+				formPageNumber = 2);
+
+			AssertTextEquals(
+				key_formPageName = "Page 2",
+				locator1 = "FormPortlet#FORM_PAGE",
+				value1 = "Page 2");
+
+			Form.navigateFormPagesTopList(
+				formPageName = "Page 3",
+				formPageNumber = 3);
+
+			AssertTextEquals(
+				key_formPageName = "Page 3",
+				locator1 = "FormPortlet#FORM_PAGE",
+				value1 = "Page 3");
+		}
+	}
+
 }
