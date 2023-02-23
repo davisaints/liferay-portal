@@ -77,7 +77,7 @@ definition {
 		task ("Then the user can add an object entry") {
 			ObjectAdmin.goToCustomObject(objectName = "ImportedSimpleObject175691");
 
-			ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Picklist");
+			ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Picklist ");
 
 			ObjectAdmin.goToCustomObject(objectName = "ImportedSimpleObject175691");
 
@@ -88,9 +88,48 @@ definition {
 	@description = "LPS-175645 - It's possible to add an object entry with a picklist previously imported"
 	@priority = 4
 	test CanAddEntryWithPicklistImported {
+		task ("Given a picklist imported and an object created") {
+			Picklist.gotoPicklists();
 
-		// TODO pending implementation
+			Picklist.importPicklist(
+				picklistFileName = "simple_picklist",
+				picklistName = "ImportedPicklist175679");
 
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "ItemTest",
+				itemName = "Picklist Item",
+				picklistName = "ImportedPicklist175679");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 175679",
+				objectName = "CustomObject175679",
+				pluralLabelName = "Custom Objects 175679");
+		}
+
+		task ("When add a picklist field") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 175679");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Field Picklist",
+				fieldPicklist = "ImportedPicklist175679",
+				fieldType = "Picklist");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject175679");
+		}
+
+		task ("Then the user can add an object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175679");
+
+			ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Picklist ");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject175679");
+
+			ObjectPortlet.viewEntry(entry = "Picklist Item");
+		}
 	}
 
 	@description = "LPS-175645 - It's possible to add an object entry with a picklist field as state of a picklist previously imported "
