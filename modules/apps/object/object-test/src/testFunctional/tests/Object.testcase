@@ -21,6 +21,25 @@ definition {
 		}
 	}
 
+	@description = "LPS-TEST - Verify if it is possible to create a Custom Object"
+	@priority = 5
+	test CanCreateCustomObject {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 01",
+			objectName = "CustomObject01",
+			pluralLabelName = "Custom Objects 01");
+
+		ObjectAdmin.openObjectAdmin();
+
+		Refresh();
+
+		Pause(locator1 = 3000);
+
+		AssertElementPresent(
+			key_label = "Custom Object 01",
+			locator1 = "ObjectAdmin#SELECT_OBJECT_FIELD");
+	}
+	
 	@description = "LPS-150886 - Verify that it's possible to delete an object after deleting the relationship"
 	@priority = 4
 	test CanDeleteCustomObjectAfterDeleteRelationship {
