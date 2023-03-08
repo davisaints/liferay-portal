@@ -39,7 +39,44 @@ definition {
 			key_label = "Custom Object 01",
 			locator1 = "ObjectAdmin#SELECT_OBJECT_FIELD");
 	}
-	
+
+	@description = "LPS-TEST - Verify it is possible to create a String field"
+	@priority = 5
+	test CanCreateStringFieldInCustomObject {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 01",
+			objectName = "CustomObject01",
+			pluralLabelName = "Custom Objects 01");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 01");
+
+		ObjectAdmin.goToFieldsTab();
+
+		LexiconEntry.gotoAdd();
+
+		Pause(locator1 = 2000);
+
+		Type(
+			locator1 = "ObjectField#LABEL_INPUT",
+			value1 = "Custom String Field 01");
+
+		ObjectField.selectType(fieldType = "Text");
+
+		Pause(locator1 = 2000);
+
+		PortletEntry.save();
+
+		Refresh();
+
+		Pause(locator1 = 2000);
+
+		AssertElementPresent(
+			key_label = "Custom String Field 01",
+			locator1 = "ObjectAdmin#SELECT_OBJECT_FIELD");
+	}
+
 	@description = "LPS-150886 - Verify that it's possible to delete an object after deleting the relationship"
 	@priority = 4
 	test CanDeleteCustomObjectAfterDeleteRelationship {
