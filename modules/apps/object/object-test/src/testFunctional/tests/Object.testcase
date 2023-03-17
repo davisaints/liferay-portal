@@ -24,19 +24,16 @@ definition {
 	@description = "LPS-TEST - Verify if it is possible to create a Custom Object"
 	@priority = 5
 	test CanCreateCustomObject {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 01",
-			objectName = "CustomObject01",
-			pluralLabelName = "Custom Objects 01");
-
 		ObjectAdmin.openObjectAdmin();
 
-		Refresh();
+		ObjectAdmin.addNewObject(
+			fieldLabelName = "Custom Object 777",
+			pluralLabelName = "Custom Objects 777");
 
-		Pause(locator1 = 3000);
+		CreateObject.saveObject();
 
 		AssertElementPresent(
-			key_label = "Custom Object 01",
+			key_label = "Custom Object 777",
 			locator1 = "ObjectAdmin#SELECT_OBJECT_FIELD");
 	}
 
@@ -54,27 +51,15 @@ definition {
 
 		ObjectAdmin.goToFieldsTab();
 
-		LexiconEntry.gotoAdd();
-
-		Pause(locator1 = 2000);
-
-		Type(
-			locator1 = "ObjectField#LABEL_INPUT",
-			value1 = "Custom String Field 01");
-
-		ObjectField.selectType(fieldType = "Text");
-
-		Pause(locator1 = 2000);
-
-		PortletEntry.save();
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Full Name",
+			fieldType = "Text");
 
 		Refresh();
 
-		Pause(locator1 = 2000);
-
-		AssertElementPresent(
-			key_label = "Custom String Field 01",
-			locator1 = "ObjectAdmin#SELECT_OBJECT_FIELD");
+		ObjectAdmin.assertObjectField(
+			fieldLabel = "Full Name",
+			fieldType = "Text");
 	}
 
 	@description = "LPS-TEST - Verify it is possible to add a field after the Object is published and submit entries to it"
@@ -128,12 +113,7 @@ definition {
 			fieldLabel = "Phone Number",
 			fieldType = "LongInteger");
 
-		
-
-		ApplicationsMenu.gotoPortlet(
-				category = "Object",
-				panel = "Control Panel",
-				portlet = "Custom Objects 777");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject777");
 
 		LexiconEntry.gotoAdd();
 
