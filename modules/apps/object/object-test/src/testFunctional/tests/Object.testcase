@@ -21,6 +21,79 @@ definition {
 		}
 	}
 
+	@description = "LPS-TEST - Verify it is possible to add a field after the Object is published and submit entries to it"
+	@priority = 5
+	test CanAddFieldAfterObjectPublishedAndSubmitEntries {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 777",
+			objectName = "CustomObject777",
+			pluralLabelName = "Custom Objects 777");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 777");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Full Name",
+			fieldType = "Text");
+
+		Refresh();
+
+		ObjectAdmin.assertObjectField(
+			fieldLabel = "Full Name",
+			fieldType = "Text");
+
+		ObjectAdmin.goToDetailsTab();
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+		ObjectAdmin.publishObjectViaUI();
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 777");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Phone Number",
+			fieldType = "Long Integer");
+
+		Refresh();
+
+		ObjectAdmin.assertObjectField(
+			fieldLabel = "Phone Number",
+			fieldType = "LongInteger");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject777");
+
+		LexiconEntry.gotoAdd();
+
+		WaitForPageLoad();
+
+		ObjectPortlet.typeCustomField(
+			customField = "Full Name",
+			entry = "Ronaldo Fenomeno");
+
+		ObjectPortlet.typeCustomField(
+			customField = "Phone Number",
+			entry = 5545954341434);
+
+		PortletEntry.save();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject777");
+
+		for (var asserts : list "Ronaldo Fenomeno,5545954341434,Test Test") {
+			ObjectPortlet.viewEntry(entry = ${asserts});
+		}
+	}
+
 	@description = "LPS-TEST - Verify if it is possible to create a Custom Object"
 	@priority = 5
 	test CanCreateCustomObject {
@@ -60,82 +133,6 @@ definition {
 		ObjectAdmin.assertObjectField(
 			fieldLabel = "Full Name",
 			fieldType = "Text");
-	}
-
-	@description = "LPS-TEST - Verify it is possible to add a field after the Object is published and submit entries to it"
-	@priority = 5
-	test CanAddFieldAfterObjectPublishedAndSubmitEntries {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 777",
-			objectName = "CustomObject777",
-			pluralLabelName = "Custom Objects 777");
-
-		Navigator.openURL();
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 777");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Full Name",
-			fieldType = "Text");
-
-		Refresh();
-
-		ObjectAdmin.assertObjectField(
-			fieldLabel = "Full Name",
-			fieldType = "Text");
-
-
-		ObjectAdmin.goToDetailsTab();
-
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
-
-		ObjectAdmin.publishObjectViaUI();
-
-		Navigator.openURL();
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 777");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Phone Number",
-			fieldType = "Long Integer");
-
-		Refresh();
-
-		ObjectAdmin.assertObjectField(
-			fieldLabel = "Phone Number",
-			fieldType = "LongInteger");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject777");
-
-		LexiconEntry.gotoAdd();
-
-		WaitForPageLoad();
-
-		ObjectPortlet.typeCustomField(
-				customField = "Full Name",
-				entry = "Ronaldo Fenomeno");
-
-		ObjectPortlet.typeCustomField(
-				customField = "Phone Number",
-				entry = "5545954341434");
-
-		PortletEntry.save();
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject777");
-
-		for (var asserts : list "Ronaldo Fenomeno,5545954341434,Test Test") {
-				ObjectPortlet.viewEntry(entry = ${asserts});
-			}
-
-
 	}
 
 	@description = "LPS-150886 - Verify that it's possible to delete an object after deleting the relationship"
