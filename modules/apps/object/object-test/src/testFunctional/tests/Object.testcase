@@ -29,19 +29,19 @@ definition {
 			objectName = "CustomObject777",
 			pluralLabelName = "Custom Objects 777");
 
-		Navigator.openURL();
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Full Name",
+			fieldName = "fullname",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject777");
 
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 777");
 
 		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Full Name",
-			fieldType = "Text");
-
-		Refresh();
 
 		ObjectAdmin.assertObjectField(
 			fieldLabel = "Full Name",
@@ -55,17 +55,19 @@ definition {
 
 		Navigator.openURL();
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "LongInteger",
+			fieldLabelName = "Phone Number",
+			fieldName = "phonenumber",
+			fieldType = "Clob",
+			isRequired = "false",
+			objectName = "CustomObject777");
+
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 777");
 
 		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Phone Number",
-			fieldType = "Long Integer");
-
-		Refresh();
 
 		ObjectAdmin.assertObjectField(
 			fieldLabel = "Phone Number",
