@@ -1,3 +1,26 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
     @description = "LPS-135398 - Verify unique values are enforced when editing an existing entry"
     @priority = 5 
     test CanPreventDuplicateIntegerWhenEditing {
@@ -63,6 +86,7 @@
             Alert.viewErrorMessage(errorMessage = "The Custom Integer Field is already in use. Please enter a unique Custom Integer Field.");
         }
     }
+
     @description = "LPS-135398 - Verify unique values can be enforced for text fields"
     @priority = 5
     test CanPreventDuplicateText {
@@ -121,3 +145,5 @@
             Alert.viewErrorMessage(errorMessage = "The Custom Text Field is already in use. Please enter a unique Custom Text Field.");
         }
     }
+
+}
