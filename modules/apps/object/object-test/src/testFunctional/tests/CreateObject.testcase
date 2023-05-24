@@ -9242,4 +9242,52 @@ definition {
 			locator1 = "ObjectPortlet#ENTRY_STATUS");
 	}
 
+	@description = "LPS-184370 - Verify if is possible delete an custom Object that is inactive"
+	@priority = 3 
+	test CanDeleteAnInactiveObject {
+		task ("Given a Custom Object with a text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 184370",
+				objectName = "CustomObject184370",
+				pluralLabelName = "Custom Objects 184370");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Text Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject184370");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject184370");
+		}
+
+		task ("And given an entry is added") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject184370",
+				value = "Entry Test");
+		}
+
+		task ("When the Object is inactivated") {
+			ObjectAdmin.openObjectAdmin();	
+
+			CreateObject.inactiveCustomObject(objectLabel = "Custom Object 184370");
+		}
+
+		task ("And when try delete the Object") {
+			Navigator.gotoBack();
+
+			CreateObject.deleteObjectViaUI(objectLabel = "Custom Object 184370");
+
+			WaitForPageLoad();
+		}
+
+		task ("Then the Object is deleted") {
+			AssertElementNotPresent(
+				key_labelName = "Custom Object 184370",
+				locator1 = "CreateObject#OBJECT_NAME");
+		}
+	}
+
 }
