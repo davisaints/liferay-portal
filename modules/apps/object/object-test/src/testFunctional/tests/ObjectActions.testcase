@@ -3117,6 +3117,7 @@ definition {
 	@description = "LPS-146871 - Verify an Action with Groovy Script can be triggered after deleting an entry."
 	@priority = 4
 	test CanTriggerActionDeleteWithGroovyScript {
+		property portal.acceptance = "jhosseph";
 		property portal.upstream = "quarantine";
 
 		task ("Given an object with a field is created") {
