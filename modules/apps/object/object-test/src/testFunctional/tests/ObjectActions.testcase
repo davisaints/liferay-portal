@@ -409,6 +409,51 @@ definition {
 		}
 	}
 
+	@description = "LPS-173537 - Verify updating an Account entry triggers an action to add a user"
+	@priority = 5
+	test CanAddUserAfterUpdatingAccountEntry {
+		property portal.acceptance = "totest";
+		
+		task ("Given a Account object") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectSystemObject(label = "Account");
+		}
+
+		task ("And given an action to add an Account entry after updating an Account entry") {
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Add Account entry after entry is updated",
+				active = "true",
+				inputMethod = "true",
+				inputValue = "New Account Name,Business",
+				objectLabel = "Account",
+				thenAction = "Add an Object Entry",
+				whenAction = "On After Update");
+		}
+
+		task ("And given an Account entry is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+		}
+
+		task ("When the Account entry is updated") {
+			Account.openAccountsAdmin();
+
+			Account.editCP(
+				accountName = "Account Name",
+				accountNameEdit = "Update Account Name");
+		}
+
+		task ("Then the action is triggered and a new Account entry is created") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.viewEntryName(rowEntry = "New Account Name");
+		}
+	}
+
 	@description = "LPS-139008 - Verify it is possible to cancel the creation of an Action"
 	@priority = 4
 	test CanCancelAction {
