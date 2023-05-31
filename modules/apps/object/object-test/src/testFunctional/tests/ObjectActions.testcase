@@ -448,7 +448,7 @@ definition {
 		}
 
 		task ("Then the action is triggered and a new Account entry is created") {
-			Account.openAccountsAdmin();
+			Navigator.gotoBack();
 
 			LexiconEntry.viewEntryName(rowEntry = "New Account Name");
 		}
