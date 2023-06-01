@@ -413,7 +413,7 @@ definition {
 	@priority = 5
 	test CanAddUserAfterUpdatingAccountEntry {
 		property portal.acceptance = "totest";
-		
+
 		task ("Given a Account object") {
 			ObjectAdmin.openObjectAdmin();
 
