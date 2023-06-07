@@ -1187,6 +1187,11 @@ definition {
 			fieldName = "LinkToPage",
 			pagePrivacy = "Public");
 
+		WaitForVisible(
+			key_indexNumber = 1,
+			key_text = "Publish",
+			locator1 = "Button#ANY_N");
+
 		Click(
 			key_indexNumber = 1,
 			key_text = "Publish",

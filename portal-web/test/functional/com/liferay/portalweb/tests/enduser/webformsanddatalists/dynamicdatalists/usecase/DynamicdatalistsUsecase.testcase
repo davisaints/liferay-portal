@@ -2391,6 +2391,11 @@ definition {
 			ddlRecordFieldData = "Test Page 10",
 			fieldName = "LinkToPage");
 
+		WaitForVisible(
+			key_indexNumber = 1,
+			key_text = "Publish",
+			locator1 = "Button#ANY_N");
+
 		Click(
 			key_indexNumber = 1,
 			key_text = "Publish",
