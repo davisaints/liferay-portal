@@ -2344,6 +2344,8 @@ definition {
 	@description = "This is a use case for LPS-69667."
 	@priority = 2
 	test SelectLinkToPagePage {
+		property portal.acceptance = "runtwotests";
+
 		for (var pageNumber : list "1,2,3,4,5,6,7,8,9,10,11,12") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
@@ -2390,6 +2392,10 @@ definition {
 		DDLRecord.populateFieldLinkToPage(
 			ddlRecordFieldData = "Test Page 10",
 			fieldName = "LinkToPage");
+
+		Refresh();
+
+		WaitForSPARefresh();
 
 		WaitForVisible(
 			key_indexNumber = 1,

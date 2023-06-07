@@ -1124,6 +1124,8 @@ definition {
 	@description = "This is a use case for LPS-65726"
 	@priority = 5
 	test AddListRecordWithLinkToPageField {
+		property portal.acceptance = "runtwotests";
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
@@ -1186,6 +1188,10 @@ definition {
 			ddlRecordFieldData = "Test Page",
 			fieldName = "LinkToPage",
 			pagePrivacy = "Public");
+
+		Refresh();
+
+		WaitForSPARefresh();
 
 		WaitForVisible(
 			key_indexNumber = 1,
