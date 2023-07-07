@@ -2365,7 +2365,9 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
 
-		ProcessBuilderKaleoDesignerReact.deleteAssignment();
+		ProcessBuilderKaleoDesignerReact.assertCannotDeleteAllAssignments();
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
 		ProcessBuilderKaleoDesignerReact.viewPropertyPresentOnSideBar(
 			propertyName = "Assignment",
