@@ -2936,6 +2936,20 @@ definition {
 		Workflow.openWorkflowListView();
 
 		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition Title");
+
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Start Task Connector",
+			connectorOut = "start",
+			key_direction = "top");
+
+		PortletEntry.publish();
+
+		Navigator.gotoBack();
+
+		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "New Workflow Definition Title");
 	}
 
 	@description = "Verify that the user can save an invalid workflow definition as a draft"
