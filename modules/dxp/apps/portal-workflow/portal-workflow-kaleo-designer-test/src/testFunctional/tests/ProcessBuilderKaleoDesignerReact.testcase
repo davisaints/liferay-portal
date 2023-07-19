@@ -4080,15 +4080,6 @@ definition {
 			codeSnippetNotPresent = "Start");
 	}
 
-	@description = "LPS-129928 - Verify that when the user makes changes to the XML code these changes are reflected in the Process Builder"
-	@ignore = "Test Stub"
-	@priority = 5
-	test ChangesOnXMLAreReflectedOnDiagram {
-
-		// TODO LRQA-72999 ChangesOnXMLAreReflectedOnDiagram pending implementation
-
-	}
-
 	@description = "Verify that Condition Node do not have Timers property"
 	@priority = 4
 	test ConditionHasNoTimersProperty {
