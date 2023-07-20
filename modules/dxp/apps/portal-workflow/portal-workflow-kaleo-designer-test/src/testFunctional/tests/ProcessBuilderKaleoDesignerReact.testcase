@@ -984,6 +984,7 @@ definition {
 	@description = "Verify that the user is able to input a Groovy script to define the assignment"
 	@priority = 4
 	test CanDefineAssignmentWithGroovyScript {
+		property portal.acceptance = "testOnCI";
 		property test.liferay.virtual.instance = "false";
 
 		Workflow.openWorkflowListView();
@@ -997,6 +998,22 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
 			assignmentType = "Scripted Assignment",
 			groovyScript = "groovyScript = \"if(type == 'behaviorClarification') {invalidFields = true} else {invalidFields = false}\");");
+
+		Workflow.saveDefinition(newKaleoDesigner = "True");
+
+		Workflow.openWorkflowListView();
+
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
+
+		Click(locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_ASSIGNMENTS_VALUE");
+
+		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_ADD_SOURCE_CODE");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ProcessBuilderKaleoDesignerReact#GROOVY_SOURCE_EDITOR",
+			value1 = "groovyScript = \"if(type == 'behaviorClarification') {invalidFields = true} else {invalidFields = false}\");");
 	}
 
 	@description = "Verify that the user is able to define the Resource Action"
