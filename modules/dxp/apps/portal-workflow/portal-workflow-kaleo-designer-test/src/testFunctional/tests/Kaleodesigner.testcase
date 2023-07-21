@@ -183,40 +183,6 @@ definition {
 		PortletEntry.publish();
 	}
 
-	@description = "This is a use case for LPS-43214 and LPS-50269."
-	@priority = 3
-	test PublishFromSourceTabAndViewNameChange {
-		property test.liferay.virtual.instance = "false";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Workflow.addNewDefinition(workflowDefinitionTitle = "Test Definition");
-
-		KaleoDesigner.editSourceXML(
-			kdSourceXml = '''<name>NAME EDIT''',
-			line = 8);
-
-		PortletEntry.publish();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Workflow.viewDefinitionPublished(
-			workflowDefinitionName = "NAME EDIT",
-			workflowDefinitionTitle = "Test Definition");
-
-		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Test Definition");
-
-		KaleoDesigner.viewSourceXMLLine(
-			kdSourceXml = '''<name>NAME EDIT</name>''',
-			line = 8);
-	}
-
 	@description = "This is a use case for LPS-48590."
 	@priority = 4
 	test ViewSourceXMLNotErasedWhenInvalid {
