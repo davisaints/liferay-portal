@@ -120,6 +120,7 @@ definition {
 	@description = "LPS-129928 - Verify that when the user makes changes to the XML code these changes are reflected in the Process Builder"
 	@priority = 5
 	test ChangesOnXMLAreReflectedOnDiagram {
+		property portal.acceptance = "testingChangesOnXMLAreReflectedOnDiagram";
 		property test.liferay.virtual.instance = "false";
 
 		task ("Given a workflow definition") {
@@ -132,27 +133,132 @@ definition {
 				connectorLabel = "Start Connector",
 				connectorOut = "start",
 				key_direction = "right");
-
-			Workflow.saveDefinition(newKaleoDesigner = "True");
 		}
 
 		task ("When workflow definition source is edited") {
-			Click(
-				key_title = "Source View",
-				locator1 = "Button#ANY_TITLE");
+			ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
 
 			ProcessBuilderKaleoDesignerReact.editSourceXML(
 				kdSourceXml = "Start Node Updated",
-				line = 26);
+				line = 24);
 
 			PortletEntry.publish();
 		}
 
 		task ("Then the changes are reflected in the diagram") {
+			WaitForSPARefresh();
+
+			ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+				labelValue = "Start Node Updated",
+				nodeType = "start");
+		}
+	}
+
+	@description = "LPS-129928 - Verify that when the user makes changes to the XML code these changes are reflected in the Process Builder"
+	@priority = 5
+	test ChangesOnXMLAreReflectedOnDiagram1 {
+		property portal.acceptance = "testingChangesOnXMLAreReflectedOnDiagram";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given a workflow definition") {
 			Workflow.openWorkflowListView();
 
-			Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition");
+			Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
+			ProcessBuilderKaleoDesignerReact.addConnector(
+				connectorIn = "end",
+				connectorLabel = "Start Connector",
+				connectorOut = "start",
+				key_direction = "right");
+		}
+
+		task ("When workflow definition source is edited") {
+			ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+			ProcessBuilderKaleoDesignerReact.editSourceXML(
+				kdSourceXml = "Start Node Updated",
+				line = 24);
+
+			PortletEntry.publish();
+		}
+
+		task ("Then the changes are reflected in the diagram") {
+			Refresh();
+
+			WaitForSPARefresh();
+
+			ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+				labelValue = "Start Node Updated",
+				nodeType = "start");
+		}
+	}
+
+	@description = "LPS-129928 - Verify that when the user makes changes to the XML code these changes are reflected in the Process Builder"
+	@priority = 5
+	test ChangesOnXMLAreReflectedOnDiagram2 {
+		property portal.acceptance = "testingChangesOnXMLAreReflectedOnDiagram";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given a workflow definition") {
+			Workflow.openWorkflowListView();
+
+			Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+			ProcessBuilderKaleoDesignerReact.addConnector(
+				connectorIn = "end",
+				connectorLabel = "Start Connector",
+				connectorOut = "start",
+				key_direction = "right");
+		}
+
+		task ("When workflow definition source is edited") {
+			ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+			ProcessBuilderKaleoDesignerReact.editSourceXML(
+				kdSourceXml = "Start Node Updated",
+				line = 24);
+
+			PortletEntry.save();
+		}
+
+		task ("Then the changes are reflected in the diagram") {
+			WaitForSPARefresh();
+
+			ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+				labelValue = "Start Node Updated",
+				nodeType = "start");
+		}
+	}
+
+	@description = "LPS-129928 - Verify that when the user makes changes to the XML code these changes are reflected in the Process Builder"
+	@priority = 5
+	test ChangesOnXMLAreReflectedOnDiagram3 {
+		property portal.acceptance = "testingChangesOnXMLAreReflectedOnDiagram";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given a workflow definition") {
+			Workflow.openWorkflowListView();
+
+			Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+			ProcessBuilderKaleoDesignerReact.addConnector(
+				connectorIn = "end",
+				connectorLabel = "Start Connector",
+				connectorOut = "start",
+				key_direction = "right");
+		}
+
+		task ("When workflow definition source is edited") {
+			ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+			ProcessBuilderKaleoDesignerReact.editSourceXML(
+				kdSourceXml = "Start Node Updated",
+				line = 24);
+
+			PortletEntry.save();
+		}
+
+		task ("Then the changes are reflected in the diagram") {
 			ProcessBuilderKaleoDesignerReact.viewNodeInfo(
 				labelValue = "Start Node Updated",
 				nodeType = "start");
