@@ -108,6 +108,52 @@ definition {
 
 	}
 
+	@description = "Verify that the changes made to the source are saved (This is a use case for LPS-43214 and LPS-50269)"
+	@priority = 3
+	test PublishFromSourceTabAndViewNameChange {
+		property portal.acceptance = "runTest";
+		property test.liferay.virtual.instance = "false";
+
+		task ("Given a workflow definition") {
+			Workflow.openWorkflowListView();
+
+			Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+			ProcessBuilderKaleoDesignerReact.addConnector(
+				connectorIn = "end",
+				connectorLabel = "Start-End Connector",
+				connectorOut = "start",
+				key_direction = "right");
+		}
+
+		task ("When the user makes changes to the source") {
+			ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+			ProcessBuilderKaleoDesignerReact.editSourceXML(
+				kdSourceXml = '''><name>WORKFLOW NAME</name>''',
+				line = 7);
+
+			PortletEntry.publish();
+		}
+
+		task ("Then the changes are saved") {
+			Workflow.openWorkflowListView();
+
+			Workflow.viewDefinitionPublished(
+				workflowDefinitionName = "WORKFLOW NAME",
+				workflowDefinitionTitle = "New Workflow Definition");
+
+			Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+			Click(
+				key_class = "btn-monospaced",
+				key_index = 4,
+				locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+
+			ProcessBuilderKaleoDesignerReact.viewXMLSourceCodeSnippet(codeSnippet = "WORKFLOW NAME");
+		}
+	}
+
 	@description = "Verify that the Single Approver Workflow comes with the Account Member and Account Administrator role names assigned"
 	@ignore = "Test Stub"
 	@priority = 4
