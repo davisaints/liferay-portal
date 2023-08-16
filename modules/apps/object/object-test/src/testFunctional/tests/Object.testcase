@@ -21,6 +21,129 @@ definition {
 		}
 	}
 
+	@description = "LPS-0001 -  Verify if the a custom object entry can be deleted"
+	@priority = 0
+	test CanAddEntryWithAction {
+		task ("Given a custom object with two text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object",
+				objectName = "CustomObject",
+				pluralLabelName = "Custom Object");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field 1",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field 2",
+				fieldName = "customObjectField2",
+				fieldType = "String",
+				isRequired = "true",
+				objectName = "CustomObject");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		}
+
+		task ("And given an action (Trigger: On After Add / Action: Add an Object Entry) is created") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Custom Action",
+				actionName = "CustomAction",
+				active = "true",
+				inputMethod = "true",
+				inputValue = "Works!, Works too!",
+				objectLabel = "Custom Object",
+				thenAction = "Add an Object Entry",
+				whenAction = "On After Add");
+		}
+
+		task ("When the user adds an entry") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "Custom Object");
+
+			LexiconEntry.gotoAdd();
+
+			Type(
+				key_inputField = "Custom Field 1",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
+				value1 = "Text");
+
+			Type(
+				key_inputField = "Custom Field 2",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
+				value1 = "Teste");
+
+			Button.clickSave();
+		}
+
+		task ("Then the action is triggered and an entry is added") {
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "Custom Object");
+
+			ObjectPortlet.viewEntry(entry = "Text");
+
+			ObjectPortlet.viewEntry(entry = "Teste");
+		}
+	}
+
+	@description = "LPS-0002 -  Verify if can add 1:M relationship with User Object"
+	@priority = 0
+	test CanCreateOneToManyRelationship {
+		task ("Given a custom object") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Test2",
+				objectName = "Test2",
+				pluralLabelName = "Test 2");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "Test2");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "Test2");
+		}
+
+		task ("When the user add a 1:M relationship with the user object") {
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "User",
+				objectName_2 = "Test2",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+		}
+
+		task ("Then the relationship is created") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "User");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			AssertElementPresent(
+				key_name = "Relationship",
+				locator1 = "CreateObject#SELECT_OBJECT_FIELD_IN_TABLE");
+		}
+	}
+
 	@description = "LPS-150886 - Verify that it's possible to delete an object after deleting the relationship"
 	@priority = 4
 	test CanDeleteCustomObjectAfterDeleteRelationship {
@@ -73,6 +196,48 @@ definition {
 		AssertElementNotPresent(
 			locator1 = "ObjectAdmin#OBJECT_LABEL",
 			value1 = "Custom Object 290");
+	}
+
+	@description = "LPS-0001 -  Verify if the a custom object entry can be deleted"
+	@priority = 0
+	test CanDeleteObjectEntry {
+		task ("Given a custom object with a text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Teste",
+				objectName = "Teste",
+				pluralLabelName = "Teste 1");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field",
+				fieldName = "customObjectField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "Teste");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "Teste");
+		}
+
+		task ("And given an entry is added") {
+			ObjectAdmin.goToCustomObject(objectName = "Teste");
+
+			ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Teste");
+		}
+
+		task ("When user deletes entry") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "Teste 1");
+
+			ObjectPortlet.deleteEntry(entry = "Teste");
+		}
+
+		task ("Then the entry can be deleted") {
+			AssertElementNotPresent(
+				locator1 = "ObjectPortlet#ENTRY_VALUE",
+				value1 = "Teste");
+		}
 	}
 
 	@description = "LPS-150886 - Verify that it's possible to delete a published object"
@@ -729,141 +894,4 @@ definition {
 			value1 = "has 2 object entries.");
 	}
 
-	@description = "LPS-0001 -  Verify if the a custom object entry can be deleted"
-    @priority = 0
-    test CanDeleteObjectEntry {
-        task ("Given a custom object with a text field") {
-            ObjectAdmin.addObjectViaAPI(
-                labelName = "Teste",
-                objectName = "Teste",
-                pluralLabelName = "Teste 1");
-            ObjectAdmin.addObjectFieldViaAPI(
-                fieldBusinessType = "Text",
-                fieldLabelName = "Custom Field",
-                fieldName = "customObjectField",
-                fieldType = "String",
-                isRequired = "false",
-                objectName = "Teste");
-            ObjectAdmin.publishObjectViaAPI(objectName = "Teste");
-        }
-        task ("And given an entry is added") {
-            ObjectAdmin.goToCustomObject(
-                objectName = "Teste");
-            ObjectAdmin.addObjectStringFieldEntryViaUI(
-                entryValue = "Teste");
-        }
-        task ("When user deletes entry") {
-            ApplicationsMenu.gotoPortlet(
-                category = "Object",
-                panel = "Control Panel",
-                portlet = "Teste 1");
-            ObjectPortlet.deleteEntry(
-                entry = "Teste");
-        }
-        task ("Then the entry can be deleted") {
-            AssertElementNotPresent(
-                locator1 = "ObjectPortlet#ENTRY_VALUE",
-                value1 = "Teste");
-        }
-    }
-
-    @description = "LPS-0002 -  Verify if can add 1:M relationship with User Object"
-    @priority = 0
-    test CanCreateOneToManyRelationship{
-        task("Given a custom object") {
-            ObjectAdmin.addObjectViaAPI(
-                labelName = "Test2",
-                objectName = "Test2",
-                pluralLabelName = "Test 2");
-            ObjectAdmin.addObjectFieldViaAPI(
-                fieldBusinessType = "Text",
-                fieldLabelName = "Custom Field",
-                fieldName = "customObjectField",
-                fieldType = "String",
-                isRequired = "false",
-                objectName = "Test2");
-            ObjectAdmin.publishObjectViaAPI(objectName = "Test2");
-        }
-        task ("When the user add a 1:M relationship with the user object") {
-            ObjectAdmin.addObjectRelationshipViaAPI(
-                objectName_1 = "User",
-                objectName_2 = "Test2",
-                relationshipLabel = "Relationship",
-                relationshipName = "relationship",
-                relationshipType = "oneToMany");
-        }
-        task ("Then the relationship is created") {
-            ObjectAdmin.openObjectAdmin();
-            ObjectPortlet.selectCustomObject(label = "User");
-            ObjectAdmin.gotoRelationshipsTab();
-            AssertElementPresent(
-                key_name = "Relationship",
-                locator1 = "CreateObject#SELECT_OBJECT_FIELD_IN_TABLE");
-        }
-    }
-
-    @description = "LPS-0001 -  Verify if the a custom object entry can be deleted"
-    @priority = 0
-    test CanAddEntryWithAction {
-        task ("Given a custom object with two text field") {
-            ObjectAdmin.addObjectViaAPI(
-                labelName = "Custom Object",
-                objectName = "CustomObject",
-                pluralLabelName = "Custom Object");
-            ObjectAdmin.addObjectFieldViaAPI(
-                fieldBusinessType = "Text",
-                fieldLabelName = "Custom Field 1",
-                fieldName = "customObjectField",
-                fieldType = "String",
-                isRequired = "true",
-                objectName = "CustomObject");
-            ObjectAdmin.addObjectFieldViaAPI(
-                fieldBusinessType = "Text",
-                fieldLabelName = "Custom Field 2",
-                fieldName = "customObjectField2",
-                fieldType = "String",
-                isRequired = "true",
-                objectName = "CustomObject");
-            ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
-        }
-        task ("And given an action (Trigger: On After Add / Action: Add an Object Entry) is created") {
-            ObjectAdmin.openObjectAdmin();
-            ObjectPortlet.selectCustomObject(label = "Custom Object");
-            ObjectAdmin.goToActionsTab();
-            ObjectAdmin.addObjectActionViaUI(
-                actionLabel = "Custom Action",
-                actionName = "CustomAction",
-                active = "true",
-                inputMethod = "true",
-                inputValue = "Works!, Works too!",
-                objectLabel = "Custom Object",
-                thenAction = "Add an Object Entry",
-                whenAction = "On After Add");
-        }
-        task ("When the user adds an entry") {
-            ApplicationsMenu.gotoPortlet(
-                category = "Object",
-                panel = "Control Panel",
-                portlet = "Custom Object");
-            LexiconEntry.gotoAdd();
-            Type(
-                locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-                key_inputField = "Custom Field 1",
-                value1 = "Text");
-            Type(
-                locator1 = "CommerceDiagrams#DIAGRAM_PIN_INPUT_FIELD",
-                key_inputField = "Custom Field 2",
-                value1 = "Teste");
-            Button.clickSave();
-        }
-        task ("Then the action is triggered and an entry is added") {
-            Navigator.openURL();
-            ApplicationsMenu.gotoPortlet(
-                category = "Object",
-                panel = "Control Panel",
-                portlet = "Custom Object");
-            ObjectPortlet.viewEntry(entry = "Text");
-            ObjectPortlet.viewEntry(entry = "Teste");
-        }
-    }
 }
