@@ -643,6 +643,7 @@ definition {
 	@description = "Verify that the correct entries are shown when the page refreshes after autosave"
 	@priority = 4
 	test CorrectEntriesShownWhenPageRefreshedAfterAutoSaveForm {
+		property portal.acceptance = "runFormTest";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -690,6 +691,8 @@ definition {
 			FormFields.enableSwitch(fieldName = "Required Field");
 
 			Form.editFieldLabelMetal(fieldValue = "Country");
+
+			SetWindowSize.maximizeWindow();
 
 			Form.editFieldDataProvider(
 				dataProvider = "Get Countries",
