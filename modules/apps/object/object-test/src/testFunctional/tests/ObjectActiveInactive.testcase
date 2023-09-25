@@ -24,6 +24,8 @@ definition {
 	@description = "LPS-139005 - Verify that pending and completed Object entries with workflow are not displayed on the Workflow Metrics page when inactivated"
 	@priority = 4
 	test ObjectEntriesDisappearsWorkflowMetricsWhenInactivated {
+		property portal.acceptance = "runsingletest";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147750",
 			objectName = "CustomObject147750",
