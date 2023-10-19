@@ -286,10 +286,10 @@ definition {
 	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Concat' to text fields"
 	@priority = 4
 	test CanDefineExpressionConcat {
-		task ("Create Custom Object and some Custom Fields") {
-			property test.liferay.virtual.instance = "false";
-			property test.run.type = "single";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
+		task ("Create Custom Object and some Custom Fields") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156694",
 				objectName = "CustomObject156694",
@@ -588,10 +588,10 @@ definition {
 	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Contains' and 'Does Not Contains' to text fields and integer fields"
 	@priority = 4
 	test CanDefineExpressionContainsAndDoesNotContain {
-		task ("Create Custom Object and Custom Fields") {
-			property test.liferay.virtual.instance = "false";
-			property test.run.type = "single";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
+		task ("Create Custom Object and Custom Fields") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156688",
 				objectName = "CustomObject156688",
@@ -691,10 +691,10 @@ definition {
 	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Future Dates' and 'Past Dates' to date fields"
 	@priority = 4
 	test CanDefineExpressionFutureDatesAndPastDates {
-		task ("Create Custom Object and Custom Field") {
-			property test.liferay.virtual.instance = "false";
-			property test.run.type = "single";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
+		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156701",
 				objectName = "CustomObject156701",
@@ -783,10 +783,10 @@ definition {
 	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Is an Email' to text fields"
 	@priority = 4
 	test CanDefineExpressionIsAnEmail {
-		task ("Create Custom Object and Custom Field") {
-			property test.liferay.virtual.instance = "false";
-			property test.run.type = "single";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
+		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156690",
 				objectName = "CustomObject156690",
@@ -837,10 +837,10 @@ definition {
 	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Is Integer' to integer fields and 'Is Decimal' to decimal fields"
 	@priority = 4
 	test CanDefineExpressionIsDecimalOrIsInteger {
-		task ("Create Custom Object and Custom Field") {
-			property test.liferay.virtual.instance = "false";
-			property test.run.type = "single";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
+		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156698",
 				objectName = "CustomObject156698",
@@ -929,10 +929,10 @@ definition {
 	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Is Empty' to text fields"
 	@priority = 4
 	test CanDefineExpressionIsEmpty {
-		task ("Create Custom Object and Custom Field") {
-			property test.liferay.virtual.instance = "false";
-			property test.run.type = "single";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
+		task ("Create Custom Object and Custom Field") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156695",
 				objectName = "CustomObject156695",
@@ -1661,10 +1661,10 @@ definition {
 	@description = "LPS-147651 - Verify that the user can define and use a expression with 'Sum' to integer fields"
 	@priority = 4
 	test CanDefineExpressionSum {
-		task ("Create Custom Object and some Custom Fields") {
-			property test.liferay.virtual.instance = "false";
-			property test.run.type = "single";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
+		task ("Create Custom Object and some Custom Fields") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 156699",
 				objectName = "CustomObject156699",
