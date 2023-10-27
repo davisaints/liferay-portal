@@ -1,0 +1,25 @@
+definition {
+
+	macro bindToRootObject {
+		Click(
+			key_objectLabel = ${childObject},
+			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+
+		MenuItem.clickNoError(menuItem = "Bind");
+
+		var index = 1;
+
+		for (var rootObject : list ${rootObjectPath}) {
+			Click(
+				key_placeHolder = "Choose an Option",
+				locator1 = "ObjectRootModel#DROPDOWN_MENU_WITH_INDEX");
+
+			Click(
+				key_menuItem = ${rootObject},
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+
+			var index = ${index} + 1;
+		}
+	}
+
+}
