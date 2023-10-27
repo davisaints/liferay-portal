@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>ObjectRootModel</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ObjectRootModel</td></tr>
+</thead>
+
+<tbody>
+	<tr>
+		<td>DROPDOWN_MENU_WITH_INDEX</td>
+		<td>xpath=(//input[contains(@placeholder,'${key_placeHolder}') and not(contains(@class,'disabled'))])[${index}]</td>
+		<td></td>
+	</tr>
+</tbody>
+</table>
+</body>
+</html>
