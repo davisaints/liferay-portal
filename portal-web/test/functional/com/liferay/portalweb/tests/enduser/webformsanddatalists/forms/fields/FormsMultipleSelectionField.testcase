@@ -500,7 +500,7 @@ definition {
 
 		AssertElementPresent(
 			key_toggleSwitchLabel = "Switch 1",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			locator1 = "ToggleSwitch#TOGGLE_SWITCH_BY_LABEL");
 
 		Form.gotoAdvancedTab();
 
@@ -518,7 +518,7 @@ definition {
 
 		AssertElementPresent(
 			key_toggleSwitchLabel = "Switch 1",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			locator1 = "ToggleSwitch#TOGGLE_SWITCH_BY_LABEL");
 	}
 
 	@description = "Verify that options can be added"
@@ -638,7 +638,7 @@ definition {
 
 		AssertElementPresent(
 			key_toggleSwitchLabel = "Switch 1",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			locator1 = "ToggleSwitch#TOGGLE_SWITCH_BY_LABEL");
 
 		Form.save();
 
@@ -648,7 +648,7 @@ definition {
 
 		AssertElementPresent(
 			key_toggleSwitchLabel = "Switch 1",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			locator1 = "ToggleSwitch#TOGGLE_SWITCH_BY_LABEL");
 	}
 
 	@description = "Verify that options can be displayed both inline and as a list"

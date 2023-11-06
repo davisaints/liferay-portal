@@ -1257,7 +1257,7 @@ definition {
 			prefix = "ABC",
 			thousandsSeparator = "1 000");
 
-		FormFields.viewNumericInputMask(inputMaskValue = "0,00");
+		FormFields.viewNumericInputMask(inputMaskValue = "0.00");
 
 		Form.addTranslation(localizedLanguage = "Portuguese (Brazil)");
 
@@ -1277,7 +1277,7 @@ definition {
 
 		Navigator.openSpecificURL(url = ${publishedFormPublicURL});
 
-		FormFields.viewNumericInputMask(inputMaskValue = "0,00");
+		FormFields.viewNumericInputMask(inputMaskValue = "0.00");
 
 		FormFields.editText(
 			fieldName = "Numeric",
@@ -1638,7 +1638,7 @@ definition {
 
 		FormFields.setInputMaskOnDecimal(decimalSeparator = "0,00");
 
-		FormFields.viewNumericInputMask(inputMaskValue = "0,00");
+		FormFields.viewNumericInputMask(inputMaskValue = "0.00");
 
 		Form.publishForm();
 
@@ -2129,13 +2129,13 @@ definition {
 
 		FormFields.viewNumericInputMask(
 			affixValue = "ABC123@$&*",
-			inputMaskValue = "0,00");
+			inputMaskValue = "0.00");
 
 		FormFields.setInputMaskOnDecimal(suffix = "ABC123@$&*");
 
 		FormFields.viewNumericInputMask(
 			affixValue = "ABC123@$&*",
-			inputMaskValue = "0,00");
+			inputMaskValue = "0.00");
 
 		Form.publishForm();
 
@@ -2143,7 +2143,7 @@ definition {
 
 		FormFields.viewNumericInputMask(
 			affixValue = "ABC123@$&*",
-			inputMaskValue = "0,00");
+			inputMaskValue = "0.00");
 
 		AssertElementPresent(
 			key_affixValue = "ABC123@$&*",
@@ -2163,7 +2163,7 @@ definition {
 
 		FormFields.viewNumericInputMask(
 			affixValue = "ABC123@$&*",
-			inputMaskValue = "0,00");
+			inputMaskValue = "0.00");
 
 		AssertElementPresent(
 			key_affixValue = "ABC123@$&*",
