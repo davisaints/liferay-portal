@@ -1106,6 +1106,10 @@ public class ObjectEntryLocalServiceImpl
 				).eq(
 					extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn()
 				)
+			).innerJoinON(
+				ObjectEntryTable.INSTANCE,
+				ObjectEntryTable.INSTANCE.objectEntryId.eq(
+					dynamicObjectDefinitionTable.getPrimaryKeyColumn())
 			).leftJoinOn(
 				dynamicObjectDefinitionLocalizationTable,
 				_getLeftJoinLocalizationTablePredicate(
