@@ -1011,7 +1011,31 @@ public class ObjectEntryLocalServiceTest {
 
 	@Test
 	public void testAddObjectEntryWithFormulaObjectField() throws Exception {
-		ObjectField objectField = _addCustomObjectField(
+		ObjectField objectField1 = _addCustomObjectField(
+			new FormulaObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap("Id sum")
+			).name(
+				"idSum"
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						"script"
+					).value(
+						"id + id"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						"output"
+					).value(
+						ObjectFieldConstants.BUSINESS_TYPE_DECIMAL
+					).build())
+			).build());
+
+		ObjectField objectField2 = _addCustomObjectField(
 			new FormulaObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap("Overweight")
@@ -1054,7 +1078,16 @@ public class ObjectEntryLocalServiceTest {
 				"overweight"),
 			0);
 
-		_objectFieldLocalService.deleteObjectField(objectField);
+		Assert.assertEquals(
+			objectEntry.getObjectEntryId() + objectEntry.getObjectEntryId(),
+			MapUtil.getDouble(
+				_objectEntryLocalService.getValues(
+					objectEntry.getObjectEntryId()),
+				"idSum"),
+			0);
+
+		_objectFieldLocalService.deleteObjectField(objectField1);
+		_objectFieldLocalService.deleteObjectField(objectField2);
 	}
 
 	@Test
