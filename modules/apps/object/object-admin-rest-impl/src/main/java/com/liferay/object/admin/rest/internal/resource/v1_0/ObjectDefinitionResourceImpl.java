@@ -172,7 +172,7 @@ public class ObjectDefinitionResourceImpl
 
 		return _toObjectDefinition(
 			_objectDefinitionService.
-				fetchObjectDefinitionByExternalReferenceCode(
+				getObjectDefinitionByExternalReferenceCode(
 					externalReferenceCode, contextCompany.getCompanyId()));
 	}
 
