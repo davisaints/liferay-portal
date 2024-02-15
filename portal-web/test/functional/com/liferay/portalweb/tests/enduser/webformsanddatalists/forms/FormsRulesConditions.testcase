@@ -1146,7 +1146,7 @@ definition {
 	@description = "Verify that the OR operator on Condition is working as expected"
 	@priority = 5
 	test CanCreateMultipleConditionsUsingOR {
-		property portal.acceptance = "true";
+		property portal.acceptance = "runsingletest";
 
 		FormsAdmin.addForm();
 
@@ -1191,6 +1191,8 @@ definition {
 			actionRowNumber = 1,
 			actionTarget = "Paragraph");
 
+		takeScreenshot();
+
 		FormRules.save();
 
 		for (var field : list "Text,Numeric") {
@@ -1212,11 +1214,124 @@ definition {
 			actionTarget = "Paragraph",
 			ruleNumber = 1);
 
+		takeScreenshot();
+
 		FormsAdminNavigator.gotoFormBuilder();
 
 		FormsAdminNavigator.gotoPreviewForm();
 
 		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.viewParagraphFieldNotPresent(fieldTitle = "Paragraph");
+
+		var count = 0;
+
+		while (${count} != 3) {
+			if ((${count} == 0) || (${count} == 2)) {
+				FormFields.editText(
+					fieldName = "Text",
+					fieldValue = "Test");
+			}
+			else {
+				FormFields.editText(
+					fieldName = "Numeric",
+					fieldValue = 1);
+			}
+
+			FormFields.viewParagraphField(
+				fieldTitle = "Paragraph",
+				fieldValue = "Test.");
+
+			if (${count} == 0) {
+				FormFields.editTextWithBackspace(fieldName = "Text");
+			}
+
+			var count = ${count} + 1;
+		}
+	}
+
+	@description = "Verify that the OR operator on Condition is working as expected"
+	@priority = 5
+	test CanCreateMultipleConditionsUsingOR2 {
+		property portal.acceptance = "runsingletest";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		for (var fieldAndNumber : list "Text-0,Numeric-1,Paragraph-2") {
+			var field = StringUtil.extractFirst(${fieldAndNumber}, "-");
+			var rowNumber = StringUtil.extractLast(${fieldAndNumber}, "-");
+
+			Form.gotoAddField(
+				fieldPositionNumber = ${rowNumber},
+				fieldType = ${field},
+				formPageNumber = 0);
+
+			if (${field} == "Paragraph") {
+				FormFields.editParagraphBody(content = "Test.");
+			}
+
+			Form.closeSidebar();
+		}
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		for (var fieldAndNumber : list "Text-1,Numeric-2") {
+			var field = StringUtil.extractFirst(${fieldAndNumber}, "-");
+			var rowNumber = StringUtil.extractLast(${fieldAndNumber}, "-");
+
+			FormRules.configureConditionOptions(
+				conditionField = ${field},
+				conditionOperator = "Is Not Empty",
+				conditionRowNumber = ${rowNumber});
+
+			if (${field} == "Text") {
+				FormRules.addCondition();
+			}
+		}
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = 1,
+			actionTarget = "Paragraph");
+
+		takeScreenshot();
+
+		FormRules.save();
+
+		for (var field : list "Text,Numeric") {
+			FormRules.viewConditionFieldSummary(
+				conditionField = ${field},
+				ruleNumber = 1);
+
+			FormRules.viewConditionOperatorSummary(
+				conditionOperator = "Is Not Empty",
+				ruleNumber = 1);
+		}
+
+		FormRules.viewActionSummary(
+			action = "Show",
+			ruleNumber = 1);
+
+		FormRules.viewActionTargetSummary(
+			action = "Show",
+			actionTarget = "Paragraph",
+			ruleNumber = 1);
+
+		takeScreenshot();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		while ((IsElementPresent(key_fieldName = "Paragraph", locator1 = "FormFields#PARAGRAPH_TITLE")) && (maxIterations = "5")) {
+			Refresh();
+		}
 
 		FormFields.viewParagraphFieldNotPresent(fieldTitle = "Paragraph");
 
