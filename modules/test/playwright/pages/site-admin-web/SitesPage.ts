@@ -6,6 +6,9 @@
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {UIElementsPage} from '../uielements/UIElementsPage';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import {waitForAlert} from '../../utils/waitForAlert';
+import {PORTLET_URLS} from '../../utils/portletUrls';
 
 export class SitesPage {
 	readonly page: Page;
@@ -15,7 +18,9 @@ export class SitesPage {
 	readonly addSiteIFrame: FrameLocator;
 	readonly customSiteTemplatesItem: Locator;
 	readonly defaultPagesAsPrivateCheck: Locator;
+	readonly deleteButton: Locator;
 	readonly nameBox: Locator;
+	readonly selectAllItemsCheckbox: Locator;
 	readonly uiElementsPage: UIElementsPage;
 
 	constructor(page: Page) {
@@ -35,23 +40,33 @@ export class SitesPage {
 			.getByLabel(
 				'Create default pages as private (available only to members). If unchecked, they will be public (available to anyone).'
 			);
+		this.deleteButton = page.getByRole('button', {name: 'Delete'});
 		this.nameBox = page
 			.frameLocator('iframe[title="Add Site"]')
 			.getByLabel('Name Required');
+		this.selectAllItemsCheckbox = page.getByLabel(
+			'Select All Items on the Page'
+		);
 		this.uiElementsPage = new UIElementsPage(page);
 	}
 
-	async createSiteFromTemplate({
+	async createSite({
 		defaultPagesAsPrivate = false,
+		isCustom,
 		siteName,
 		templateName,
 	}: {
 		defaultPagesAsPrivate?: boolean;
+		isCustom: boolean;
 		siteName: string;
 		templateName: string;
 	}): Promise<string> {
 		await this.addSiteButton.click();
-		await this.customSiteTemplatesItem.click();
+
+		if (isCustom) {
+			await this.customSiteTemplatesItem.click();
+		}
+
 		await this.page
 			.getByRole('button', {name: `Select Template: ${templateName}`})
 			.click();
@@ -70,5 +85,26 @@ export class SitesPage {
 			.getAttribute('value');
 
 		return siteId as string;
+	}
+
+	async deleteAll() {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.deleteButton,
+			trigger: this.selectAllItemsCheckbox,
+		});
+
+		await this.page
+			.getByRole('alert')
+			.getByRole('button', {
+				name: 'Delete',
+			})
+			.click();
+
+		await waitForAlert(this.page);
+	}
+
+	async goto() {
+		await this.page.goto(PORTLET_URLS.sites);
 	}
 }
