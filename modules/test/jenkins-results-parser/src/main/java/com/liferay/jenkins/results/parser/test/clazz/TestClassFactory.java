@@ -53,6 +53,17 @@ public class TestClassFactory {
 		return npmTestClasses;
 	}
 
+	public static List<PlaywrightJUnitTestClass>
+		getPlaywrightJUnitTestClasses() {
+
+		List<PlaywrightJUnitTestClass> playwrightJUnitTestClasses =
+			new ArrayList<>(_playwrightJUnitTestClassHashMap.values());
+
+		Collections.sort(playwrightJUnitTestClasses);
+
+		return playwrightJUnitTestClasses;
+	}
+
 	public static TestClass newTestClass(
 		BatchTestClassGroup batchTestClassGroup, File testClassFile) {
 
@@ -309,5 +320,7 @@ public class TestClassFactory {
 		new HashMap<>();
 	private static final Map<File, NPMTestClass> _npmTestClasses =
 		new HashMap<>();
+	private static final Map<File, PlaywrightJUnitTestClass>
+		_playwrightJUnitTestClassHashMap = new HashMap<>();
 
 }

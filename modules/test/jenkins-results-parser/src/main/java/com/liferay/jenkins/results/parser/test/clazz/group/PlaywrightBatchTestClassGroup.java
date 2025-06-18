@@ -13,14 +13,19 @@ import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestBatch;
 import com.liferay.jenkins.results.parser.test.batch.PlaywrightTestSelector;
+import com.liferay.jenkins.results.parser.test.clazz.PlaywrightJUnitTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 
 import java.io.File;
 import java.io.IOException;
 
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -97,6 +102,62 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		recordJobProperties(jobProperties);
+	}
+
+	public void writeTestCSVReportFile() throws Exception {
+		CSVReport csvReport = new CSVReport(
+			new CSVReport.Row(
+				"Class Name", "Method Name", "Ignored", "File Path"));
+
+		for (PlaywrightJUnitTestClass playwrightJUnitTestClass :
+				TestClassFactory.getPlaywrightJUnitTestClasses()) {
+
+			File testClassFile = playwrightJUnitTestClass.getTestClassFile();
+
+			String testClassFileRelativePath =
+				JenkinsResultsParserUtil.getPathRelativeTo(
+					testClassFile,
+					portalGitWorkingDirectory.getWorkingDirectory());
+
+			String className = testClassFile.getName();
+
+			className = className.replace(".spec.ts", "");
+
+			List<TestClassMethod> testClassMethods =
+				playwrightJUnitTestClass.getTestClassMethods();
+
+			for (TestClassMethod testClassMethod : testClassMethods) {
+				CSVReport.Row csvReportRow = new CSVReport.Row();
+
+				csvReportRow.add(className);
+				csvReportRow.add(testClassMethod.getName());
+
+				if (testClassMethod.isIgnored()) {
+					csvReportRow.add("TRUE");
+				}
+				else {
+					csvReportRow.add("");
+				}
+
+				csvReportRow.add(testClassFileRelativePath);
+
+				csvReport.addRow(csvReportRow);
+			}
+		}
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
+
+		File csvReportFile = new File(
+			JenkinsResultsParserUtil.combine(
+				"Report_playwright_", simpleDateFormat.format(new Date()),
+				".csv"));
+
+		try {
+			JenkinsResultsParserUtil.write(csvReportFile, csvReport.toString());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	protected PlaywrightBatchTestClassGroup(

@@ -6390,6 +6390,10 @@ ${custom.upgrade.properties}</echo>
 						if (batchTestClassGroup instanceof JUnitBatchTestClassGroup || batchTestClassGroup instanceof NPMTestBatchTestClassGroup) {
 							batchTestClassGroup.writeTestCSVReportFile();
 						}
+
+						if (batchTestClassGroup instanceof PlaywrightBatchTestClassGroup) {
+							batchTestClassGroup.writeTestCSVReportFile();
+						}
 					}
 					catch (Exception e) {
 						e.printStackTrace();
@@ -15777,6 +15781,10 @@ if (ppstate.equals("normal")) {
 
 	<target name="record-test-junit-csv-report">
 		<record-test-csv-report test.type="junit" />
+	</target>
+
+	<target name="record-test-playwright-csv-report">
+		<record-test-csv-report test.type="playwright" />
 	</target>
 
 	<target name="record-test-plugin-names">
