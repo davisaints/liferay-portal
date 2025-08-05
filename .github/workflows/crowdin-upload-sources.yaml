@@ -12,12 +12,11 @@ jobs:
                 with:
                     download_translations: false
                     upload_sources: true
-                    upload_translations: false
-
                     upload_sources_args: >
                         --branch=LPD-50198
                         --no-auto-update
                         --verbose
+                    upload_translations: false
 name: Crowdin Action
 on:
     push:
