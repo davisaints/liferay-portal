@@ -69,5 +69,5 @@ files:
             translation: "modules/apps/portal-language/portal-language-lang/src/main/resources/content/%file_name%_%locale%.%file_extension%",
         },
     ]
-preserve_hierarchy: true
+preserve_hierarchy: 1
 project_id_env: CROWDIN_PROJECT_ID
