@@ -1,3 +1,5 @@
+description:
+    Uploads source files to Crowdin
 jobs:
     crowdin-upload:
         runs-on: ubuntu-latest
@@ -17,7 +19,7 @@ jobs:
                         --no-auto-update
                         --verbose
                     upload_translations: false
-name: Crowdin Action
+name: Crowdin Upload Sources
 on:
     push:
         branches: [LPD-50198-crowdin-setup]
