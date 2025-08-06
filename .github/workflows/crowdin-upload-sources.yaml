@@ -8,7 +8,7 @@ jobs:
                     sparse-checkout: |
                         modules/apps/portal-language/portal-language-lang/src/main/resources/content
             -   name: Move Language.properties to root
-                run: cp --force --recursively modules/apps/portal-language/portal-language-lang/src/main/resources/content ./Language.properties
+                run: mv --force modules/apps/portal-language/portal-language-lang/src/main/resources/content ./Language.properties
             -   name: "Debugging"
                 run: ls -la .
             -   env:
