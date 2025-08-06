@@ -13,7 +13,7 @@ jobs:
             -   name: "Debugging"
                 run: |
                     ls -la .
-                    ls -la modules
+                    tree modules
             -   env:
                     CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
                     CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
