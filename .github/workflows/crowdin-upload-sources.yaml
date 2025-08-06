@@ -11,7 +11,9 @@ jobs:
             -   name: Move Language.properties to root
                 run: mv --force modules/apps/portal-language/portal-language-lang/src/main/resources/content ./Language.properties
             -   name: "Debugging"
-                run: ls -la .
+                run: |
+                    ls -la .
+                    ls -la modules
             -   env:
                     CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
                     CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
