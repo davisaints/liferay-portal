@@ -65,7 +65,7 @@ files:
                     },
                 },
             skip_untranslated_strings: 1,
-            source: "modules/apps/portal-language/portal-language-lang/src/main/resources/content/Language.properties",
+            source: "/Language.properties",
             translation: "modules/apps/portal-language/portal-language-lang/src/main/resources/content/%file_name%_%locale%.%file_extension%",
         },
     ]
