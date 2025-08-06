@@ -14,9 +14,6 @@ jobs:
             -   name: "Debugging"
                 run: |
                     ls -la .
-
-                    ## workspace
-                    ls -la /github/workspace/
             -   env:
                     CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
                     CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
