@@ -2,10 +2,11 @@ jobs:
     crowdin-upload-sources:
         runs-on: ubuntu-latest
         steps:
-            -   name: Checkout
+            -   name: Checkout specific folder
                 uses: actions/checkout@v4
-            -   name: Copy Language.properties to root
-                run: cp modules/apps/portal-language/portal-language-lang/src/main/resources/content/Language.properties ./Language.properties
+                with:
+                    sparse-checkout: |
+                        modules/apps/portal-language/portal-language-lang/src/main/resources/content
             -   env:
                     CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
                     CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
