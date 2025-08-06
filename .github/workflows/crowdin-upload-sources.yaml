@@ -29,4 +29,3 @@ on:
     push:
         branches: [LPD-50198-crowdin-setup]
         # paths: ['modules/apps/portal-language/portal-language-lang/src/main/resources/content/Language.properties']
-    workflow_dispatch:
