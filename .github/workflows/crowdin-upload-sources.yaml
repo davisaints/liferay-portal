@@ -1,7 +1,5 @@
-description:
-    Uploads source files to Crowdin
 jobs:
-    crowdin-upload:
+    crowdin-upload-sources:
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout
