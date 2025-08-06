@@ -6,10 +6,8 @@ jobs:
         steps:
             -   name: Checkout
                 uses: actions/checkout@v4
-
             -   name: Copy Language.properties to root
                 run: cp modules/apps/portal-language/portal-language-lang/src/main/resources/content/Language.properties ./Language.properties
-
             -   env:
                     CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
                     CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
