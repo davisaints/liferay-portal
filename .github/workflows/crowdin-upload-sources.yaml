@@ -2,14 +2,10 @@ jobs:
     crowdin-upload-sources:
         runs-on: ubuntu-latest
         steps:
-            -   name: Checkout specific folder
+            -   name: Checkout
                 uses: actions/checkout@v4
-                with:
-                    sparse-checkout: |
-                        modules/apps/portal-language/portal-language-lang/src/main/resources/content
-                    sparse-checkout-cone-mode: false
-            -   name: Move Language.properties to root
-                run: mv --force modules/apps/portal-language/portal-language-lang/src/main/resources/content ./Language.properties
+            -   name: Copy Language.properties to root
+                run: cp modules/apps/portal-language/portal-language-lang/src/main/resources/content/Language.properties ./Language.properties
             -   name: "Debugging"
                 run: |
                     ls -la .
