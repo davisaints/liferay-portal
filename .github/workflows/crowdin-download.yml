@@ -14,7 +14,7 @@ jobs:
                     create_pull_request: true
                     download_translations: true
                     localization_branch_name: l10n_LPD-50198
-                    pull_request_base_branch_name: crowdin-setup
+                    pull_request_base_branch_name: LPD-50198
                     pull_request_body: New Crowdin pull request with translations
                     pull_request_title: LPD-50198 Update Translations
                     upload_sources: false
