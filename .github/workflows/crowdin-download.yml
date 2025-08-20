@@ -17,7 +17,6 @@ jobs:
                         --branch=LPD-50198
                         --language=pt-BR
                         --preserve-hierarchy
-                        --skip-untranslated-strings
                         --verbose
                     localization_branch_name: l10n_LPD-50198
                     pull_request_base_branch_name: LPD-50198
