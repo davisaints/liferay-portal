@@ -25,7 +25,7 @@ jobs:
                     pull_request_title: LPD-50198 Update Translations
                     upload_sources: false
                     upload_translations: false
-name: Crowdin Action
+name: Download Translations from Crowdin
 on:
     push:
         branches: [LPD-50198]
