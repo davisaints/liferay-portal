@@ -1,10 +1,10 @@
-api_token_env: CROWDIN_PERSONAL_TOKEN
-base_path: .
-files:
+"api_token_env": "CROWDIN_PERSONAL_TOKEN"
+"base_path": .
+"files":
     [
         {
-            escape_quotes: 0,
-            escape_special_characters: 0,
+            "escape_quotes": 0,
+            "escape_special_characters": 0,
             "languages_mapping":
                 {
                     "locale":
@@ -64,10 +64,10 @@ files:
                             "zh-TW" : "zh_TW"
                     },
                 },
-            skip_untranslated_strings: 1,
-            source: "modules/apps/portal-language/portal-language-lang/src/main/resources/content/Language.properties",
-            translation: "modules/apps/portal-language/portal-language-lang/src/main/resources/content/%file_name%_%locale%.%file_extension%",
+            "skip_untranslated_strings": 1,
+            "source": "modules/apps/portal-language/portal-language-lang/src/main/resources/content/Language.properties",
+            "translation": "modules/apps/portal-language/portal-language-lang/src/main/resources/content/%file_name%_%locale%.%file_extension%",
         },
     ]
-preserve_hierarchy: 1
-project_id_env: CROWDIN_PROJECT_ID
+"preserve_hierarchy": 1
+"project_id_env": "CROWDIN_PROJECT_ID"
