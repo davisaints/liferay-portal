@@ -26,6 +26,4 @@ jobs:
                     upload_translations: false
 name: DEV - Download Translations from Crowdin
 on:
-    push:
-        branches:
-            - master
+    workflow_dispatch:
