@@ -15,7 +15,7 @@
             translation: "crowdin/%file_name%_%locale%.%file_extension%",
         },
     ]
-api_token_env: CROWDIN_PERSONAL_TOKEN
+api_token_env: CROWDIN_PERSONAL_TOKEN_DEV
 base_path: .
 preserve_hierarchy: 1
-project_id_env: CROWDIN_PROJECT_ID
+project_id_env: CROWDIN_PROJECT_ID_DEV

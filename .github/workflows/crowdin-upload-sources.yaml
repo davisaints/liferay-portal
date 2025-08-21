@@ -5,8 +5,8 @@ jobs:
             -   name: Checkout specific folder
                 uses: actions/checkout@v4
             -   env:
-                    CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-                    CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+                    CROWDIN_PERSONAL_TOKEN_DEV: ${{ secrets.CROWDIN_PERSONAL_TOKEN_DEV }}
+                    CROWDIN_PROJECT_ID_DEV: ${{ secrets.CROWDIN_PROJECT_ID_DEV }}
                 name: Crowdin push
                 uses: crowdin/github-action@v2
                 with:
