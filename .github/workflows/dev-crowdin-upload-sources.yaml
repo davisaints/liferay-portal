@@ -19,4 +19,6 @@ jobs:
                     upload_translations: false
 name: DEV - Upload Sources to Crowdin
 on:
-    workflow_dispatch:
+    push:
+        branches:
+            - LPD-62788-dev
