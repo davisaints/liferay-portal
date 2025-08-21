@@ -18,10 +18,10 @@ jobs:
                         --language=pt-BR
                         --preserve-hierarchy
                         --verbose
-                    localization_branch_name: l10n_LPD-62788-dev
-                    pull_request_base_branch_name: LPD-62788-dev
-                    pull_request_body: LPD-62788-dev New Crowdin pull request with translations
-                    pull_request_title: LPD-62788-dev Update Translations
+                    localization_branch_name: l10n_master
+                    pull_request_base_branch_name: master
+                    pull_request_body: New Crowdin pull request with translations
+                    pull_request_title: Update Translations
                     upload_sources: false
                     upload_translations: false
 name: DEV - Download Translations from Crowdin
