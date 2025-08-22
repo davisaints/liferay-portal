@@ -15,6 +15,7 @@ jobs:
                     download_translations: true
                     download_translations_args: >
                         --branch=master-test
+                        --export-only-approved
                         --language=pt-BR
                         --preserve-hierarchy
                         --verbose
@@ -28,4 +29,3 @@ name: Download Translations from Crowdin
 on:
     push:
         branches: [LPD-50198]
-        # paths: ['modules/apps/portal-language/portal-language-lang/src/main/resources/content/Language.properties']
