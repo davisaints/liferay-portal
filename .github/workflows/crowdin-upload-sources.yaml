@@ -1,0 +1,23 @@
+jobs:
+    crowdin-upload-sources:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout specific folder
+                uses: actions/checkout@v4
+            -   env:
+                    CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+                    CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+                name: Crowdin push
+                uses: crowdin/github-action@v2
+                with:
+                    download_translations: false
+                    upload_sources: true
+                    upload_sources_args: >
+                        --branch=master-test
+                        --auto-update
+                        --verbose
+                    upload_translations: false
+name: Upload Sources to Crowdin
+on:
+    push:
+        branches: [master]
