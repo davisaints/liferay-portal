@@ -21,4 +21,3 @@ name: Upload Sources to Crowdin
 on:
     push:
         branches: [LPD-50198]
-        # paths: ['modules/apps/portal-language/portal-language-lang/src/main/resources/content/Language.properties']
