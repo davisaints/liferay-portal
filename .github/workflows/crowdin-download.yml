@@ -16,8 +16,9 @@ jobs:
                     download_translations_args: >
                         --branch=master-test
                         --export-only-approved
-                        --language=pt-BR
                         --language=ar
+                        --language=eu
+                        --language=pt-BR
                         --preserve-hierarchy
                         --verbose
                     localization_branch_name: l10n_LPD-50198
