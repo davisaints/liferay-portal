@@ -1,22 +1,35 @@
 "files":
-    [
-        {
-            escape_quotes: 0,
-            escape_special_characters: 0,
-            "languages_mapping":
-                {
-                    "locale":
-                        {
-                            "ar": "ar",
-                            "eu": "eu",
-                            "pt-BR" : "pt_BR",
-                    },
-                },
-            skip_untranslated_strings: false,
-            source: "modules/apps/portal-language/portal-language-lang/src/main/resources/content/Language.properties",
-            translation: "modules/apps/portal-language/portal-language-lang/src/main/resources/content/%file_name%_%locale%.%file_extension%",
-        },
-    ]
+    -   escape_quotes: 0
+        escape_special_characters: 0
+        languages_mapping:
+            locale:
+                ar: ar
+                eu: eu
+                pt-BR: pt_BR
+        skip_untranslated_strings: false
+        source: /modules/apps/portal-language/portal-language-lang/src/main/resources/content/Language.properties
+        translation: /modules/apps/portal-language/portal-language-lang/src/main/resources/content/%file_name%_%locale%.%file_extension%
+    -   escape_quotes: 0
+        escape_special_characters: 0
+        ignore:
+            -   "/modules/dxp/apps/osb/osb-customer/**"
+            -   "/modules/dxp/apps/osb/osb-distributed-messaging/**"
+            -   "/modules/dxp/apps/osb/osb-faro/**"
+            -   "/modules/dxp/apps/osb/osb-koroneiki/**"
+            -   "/modules/dxp/apps/osb/osb-loop/**"
+            -   "/modules/dxp/apps/osb/osb-provisioning/**"
+            -   "/modules/dxp/apps/osb/osb-testray/**"
+            -   "/modules/sdk/**"
+            -   "/modules/test/**"
+            -   "/portal-web/test/**"
+        languages_mapping:
+            locale:
+                ar: ar
+                eu: eu
+                pt-BR: pt_BR
+        skip_untranslated_strings: false
+        source: /**/bundle.properties
+        translation: /**/%file_name%_%locale%.%file_extension%
 api_token_env: CROWDIN_PERSONAL_TOKEN
 base_path: .
 preserve_hierarchy: 1
