@@ -1,5 +1,6 @@
 "files":
-    -   escape_quotes: 0
+    -   dest: /%original_file_name%
+        escape_quotes: 0
         escape_special_characters: 0
         languages_mapping:
             locale:
