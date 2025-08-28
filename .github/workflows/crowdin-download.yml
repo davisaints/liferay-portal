@@ -16,8 +16,6 @@ jobs:
                     download_translations_args: >
                         --branch=master-test
                         --export-only-approved
-                        --language=ar
-                        --language=eu
                         --language=pt-BR
                         --preserve-hierarchy
                         --verbose
