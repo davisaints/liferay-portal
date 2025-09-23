@@ -16,12 +16,12 @@ jobs:
                     download_translations_args: >
                         --branch=master-test
                         --export-only-approved
-                        --language=pt-BR
+                        --language=ar
                         --preserve-hierarchy
                         --verbose
+                    commit_message: LPD-50198 Update Translations
                     localization_branch_name: l10n_LPD-50198
                     pull_request_base_branch_name: master
-                    pull_request_body: New Crowdin pull request with translations
                     pull_request_title: LPD-50198 Update Translations
                     upload_sources: false
                     upload_translations: false
