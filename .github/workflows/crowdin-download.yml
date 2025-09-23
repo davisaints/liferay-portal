@@ -18,6 +18,7 @@ jobs:
                         --export-only-approved
                         --language=ar
                         --preserve-hierarchy
+                        --skip-untranslated-strings
                         --verbose
                     localization_branch_name: l10n_LPD-50198
                     pull_request_base_branch_name: master
