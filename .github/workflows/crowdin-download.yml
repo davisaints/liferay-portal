@@ -16,7 +16,7 @@ jobs:
                     download_translations_args: >
                         --branch=master-test
                         --export-only-approved
-                        --language=km
+                        --language=pt-BR
                         --preserve-hierarchy
                         --verbose
                     commit_message: LPD-50198 Update Translations
