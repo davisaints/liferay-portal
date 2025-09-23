@@ -15,7 +15,7 @@ jobs:
                     download_translations: true
                     download_translations_args: >
                         --branch=master-test
-                        --export-only-approved
+                        --skip-untranslated-strings
                         --language=ar
                         --preserve-hierarchy
                         --verbose
