@@ -1,0 +1,57 @@
+jobs:
+    crowdin-update-translations:
+        needs: crowdin-upload-sources
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout modules/apps and modules/dxp
+              uses: actions/checkout@v4
+              with:
+                  sparse-checkout: |
+                      modules/apps
+                      modules/dxp
+            - env:
+                  CROWDIN_PERSONAL_TOKEN: ${{secrets.CROWDIN_PERSONAL_TOKEN}}
+                  CROWDIN_PROJECT_ID: ${{secrets.CROWDIN_PROJECT_ID}}
+                  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+              name: Update Translations
+              uses: crowdin/github-action@v2
+              with:
+                  commit_message: LPD-50198 Update Translations
+                  create_pull_request: true
+                  download_translations: true
+                  download_translations_args: >
+                      --branch=master-test
+                      --export-only-approved
+                      --language=eu
+                      --verbose
+                  localization_branch_name: l10n_LPD-50198
+                  pull_request_base_branch_name: master
+                  pull_request_title: LPD-50198 Update Translations
+                  upload_sources: false
+                  upload_translations: false
+    crowdin-upload-sources:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout modules/apps and modules/dxp
+              uses: actions/checkout@v4
+              with:
+                  sparse-checkout: |
+                      modules/apps
+                      modules/dxp
+            - env:
+                  CROWDIN_PERSONAL_TOKEN: ${{secrets.CROWDIN_PERSONAL_TOKEN}}
+                  CROWDIN_PROJECT_ID: ${{secrets.CROWDIN_PROJECT_ID}}
+              name: Upload Sources to Crowdin
+              uses: crowdin/github-action@v2
+              with:
+                  download_translations: false
+                  upload_sources: true
+                  upload_sources_args: >
+                      --branch=master-test
+                      --auto-update
+                      --verbose
+                  upload_translations: false
+name: Crowdin Sync
+on:
+    push:
+        branches: [LPD-50198]
