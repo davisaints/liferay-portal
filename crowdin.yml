@@ -1,0 +1,152 @@
+api_token_env: CROWDIN_PERSONAL_TOKEN
+base_path: .
+files:
+    -   dest: /%original_file_name%
+        escape_quotes: 0
+        escape_special_characters: 0
+        languages_mapping:
+            locale:
+                ar : ar
+                bg : bg
+                ca : ca
+                cs : cs
+                da : da
+                de : de
+                de-AT: de_AT
+                de-CH: de_CH
+                el : el
+                en : en
+                en-AU : en_AU
+                en-CA : en_CA
+                en-GB : en_GB
+                en-IE : en_IE
+                es-AR : es_AR
+                es-CO : es_CO
+                es-ES : es
+                es-MX : es_MX
+                et : et
+                eu : eu
+                fa : fa
+                fi : fi
+                fr : fr
+                fr-BE : fr_BE
+                fr-CA : fr_CA
+                fr-CH : fr_CH
+                gl : gl
+                he : iw
+                hi : hi_IN
+                hr : hr
+                hu : hu
+                id : in
+                it : it
+                it-CH : it_CH
+                ja : ja
+                kk : kk
+                km : km
+                ko : ko
+                lo : lo
+                lt : lt
+                mk : mk
+                ms : ms
+                nb : nb
+                nl : nl
+                nl-BE : nl_BE
+                pl : pl
+                pt-BR : pt_BR
+                pt-PT : pt_PT
+                ro : ro
+                ru : ru
+                sk : sk
+                sl : sl
+                sr : sr_RS
+                sr-CS : sr_RS_latin
+                sv-SE : sv
+                ta : ta_IN
+                th : th
+                tr : tr
+                uk : uk
+                vi : vi
+                zh-CN : zh_CN
+                zh-TW : zh_TW
+        skip_untranslated_strings: false
+        source: /modules/apps/portal-language/portal-language-lang/src/main/resources/content/Language.properties
+        translation: /modules/apps/portal-language/portal-language-lang/src/main/resources/content/%file_name%_%locale%.%file_extension%
+    -   escape_quotes: 0
+        escape_special_characters: 0
+        ignore:
+            -   "/modules/dxp/apps/osb/osb-customer/**"
+            -   "/modules/dxp/apps/osb/osb-distributed-messaging/**"
+            -   "/modules/dxp/apps/osb/osb-faro/**"
+            -   "/modules/dxp/apps/osb/osb-koroneiki/**"
+            -   "/modules/dxp/apps/osb/osb-loop/**"
+            -   "/modules/dxp/apps/osb/osb-provisioning/**"
+            -   "/modules/dxp/apps/osb/osb-testray/**"
+        languages_mapping:
+            locale:
+                ar : ar
+                bg : bg
+                ca : ca
+                cs : cs
+                da : da
+                de : de
+                de-AT: de_AT
+                de-CH: de_CH
+                el : el
+                en : en
+                en-AU : en_AU
+                en-CA : en_CA
+                en-GB : en_GB
+                en-IE : en_IE
+                es-AR : es_AR
+                es-CO : es_CO
+                es-ES : es
+                es-MX : es_MX
+                et : et
+                eu : eu
+                fa : fa
+                fi : fi
+                fr : fr
+                fr-BE : fr_BE
+                fr-CA : fr_CA
+                fr-CH : fr_CH
+                gl : gl
+                he : iw
+                hi : hi_IN
+                hr : hr
+                hu : hu
+                id : in
+                it : it
+                it-CH : it_CH
+                ja : ja
+                kk : kk
+                km : km
+                ko : ko
+                lo : lo
+                lt : lt
+                mk : mk
+                ms : ms
+                nb : nb
+                nl : nl
+                nl-BE : nl_BE
+                pl : pl
+                pt-BR : pt_BR
+                pt-PT : pt_PT
+                ro : ro
+                ru : ru
+                sk : sk
+                sl : sl
+                sr : sr_RS
+                sr-CS : sr_RS_latin
+                sv-SE : sv
+                ta : ta_IN
+                th : th
+                tr : tr
+                uk : uk
+                vi : vi
+                zh-CN : zh_CN
+                zh-TW : zh_TW
+        skip_untranslated_strings: false
+        source: /**/bundle.properties
+        translation: /**/%file_name%_%locale%.%file_extension%
+preserve_hierarchy: true
+project_id_env: CROWDIN_PROJECT_ID
