@@ -1,0 +1,36 @@
+jobs:
+    crowdin:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  sparse-checkout: |
+                      modules/apps
+                      modules/dxp
+            - env:
+                  CROWDIN_PERSONAL_TOKEN: ${{secrets.CROWDIN_PERSONAL_TOKEN}}
+                  CROWDIN_PROJECT_ID: ${{secrets.CROWDIN_PROJECT_ID}}
+                  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+              name: Synchronize with Crowdin
+              uses: crowdin/github-action@v2
+              with:
+                  commit_message: LPD-50198 Update Translations
+                  create_pull_request: true
+                  download_translations: true
+                  download_translations_args: >
+                      --branch=master-test
+                      --export-only-approved
+                      --language=pt-BR
+                      --preserve-hierarchy
+                      --skip-untranslated-files
+                      --verbose
+                  localization_branch_name: l10n_LPD-50198
+                  pull_request_base_branch_name: master
+                  pull_request_title: LPD-50198 Update Translations
+                  upload_sources: false
+                  upload_translations: false
+name: Update Translations
+on:
+    push:
+        branches: [LPD-50198]
