@@ -23,9 +23,6 @@ files:
           - "/modules/dxp/apps/osb/osb-loop/**"
           - "/modules/dxp/apps/osb/osb-provisioning/**"
           - "/modules/dxp/apps/osb/osb-testray/**"
-          - "/modules/sdk/**"
-          - "/modules/test/**"
-          - "/portal-web/test/**"
       languages_mapping:
           locale:
               ar: ar
