@@ -18,6 +18,7 @@ jobs:
                         --export-only-approved
                         --language=pt-BR
                         --preserve-hierarchy
+                        --skip-untranslated-files
                         --verbose
                     commit_message: LPD-50198 Update Translations
                     localization_branch_name: l10n_LPD-50198
