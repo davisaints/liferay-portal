@@ -20,9 +20,7 @@ jobs:
                   download_translations: true
                   download_translations_args: >
                       --branch=master-test
-                      --export-only-approved
                       --language=eu
-                      --preserve-hierarchy
                       --verbose
                   localization_branch_name: l10n_LPD-50198
                   pull_request_base_branch_name: master
