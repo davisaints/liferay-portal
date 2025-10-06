@@ -62,7 +62,7 @@ jobs:
                             issue_number: ${{ steps.create_pr.outputs.pull_request_number }},
                             owner: context.repo.owner,
                             repo: context.repo.repo,
-                            body: 'ci:security:scan'
+                            body: 'Test'
                         })
 
 name: Crowdin Sync
