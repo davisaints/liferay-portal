@@ -51,20 +51,20 @@ jobs:
                         --auto-update
                         --verbose
                     upload_translations: false
-    trigger-security-scan:
-        needs: crowdin-update-translations
-        runs-on: ubuntu-latest
-        steps:
-            -   uses: actions/github-script@v7
+
+            -   name: Trigger Security Scan Comment
+                if: steps.create_pr.outputs.pull_request_number
+                uses: actions/github-script@v7
                 with:
                     github-token: ${{secrets.GITHUB_TOKEN}}
                     script: |
                         github.rest.issues.createComment({
-                            issue_number: context.issue.number,
+                            issue_number: ${{ steps.create_pr.outputs.pull_request_number }},
                             owner: context.repo.owner,
                             repo: context.repo.repo,
-                            body: ci:security:scan
+                            body: 'ci:security:scan'
                         })
+
 name: Crowdin Sync
 on:
     push:
