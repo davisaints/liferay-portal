@@ -15,6 +15,7 @@ jobs:
                   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
               name: Update Translations
               uses: crowdin/github-action@v2
+              id: create_pr
               with:
                   commit_message: LPD-50198 Update Translations
                   create_pull_request: true
@@ -29,8 +30,14 @@ jobs:
                   pull_request_title: LPD-50198 Update Translations
                   upload_sources: false
                   upload_translations: false
+            - name: Test
+              run: gh pr comment --repo $GITHUB_REPOSITORY ${{ steps.create_pr.outputs.pull_request_url }} --body "Test"
+              env:
+                GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
     crowdin-upload-sources:
         runs-on: ubuntu-latest
+        outputs:
+            pull_request_url: ${{ steps.crowdin-update-translations.outputs.pull_request_url }}
         steps:
             - name: Checkout modules/apps and modules/dxp
               uses: actions/checkout@v4
@@ -51,6 +58,7 @@ jobs:
                       --auto-update
                       --verbose
                   upload_translations: false
+
 name: Crowdin Sync
 on:
     push:
