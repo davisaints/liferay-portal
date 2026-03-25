@@ -3214,7 +3214,7 @@
 		<tag-class>com.liferay.taglib.ui.MessageTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Arguments for the language key, if the language key is configured to recieve arguments.</description>
+			<description>Arguments for the language key, if the language key is configured to receive arguments.</description>
 			<name>arguments</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
