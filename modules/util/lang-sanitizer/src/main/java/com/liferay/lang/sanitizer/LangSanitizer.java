@@ -277,7 +277,7 @@ public class LangSanitizer {
 
 	private static final String[] _SKIP_DIR_NAMES = {
 		"bin", "build", "classes", "dependencies", "node_modules",
-		"node_modules_cache", "sql", "test-classes", "test-coverage",
+		"node_modules_cache", "sql", "test", "test-classes", "test-coverage",
 		"test-results", "tmp"
 	};
 
