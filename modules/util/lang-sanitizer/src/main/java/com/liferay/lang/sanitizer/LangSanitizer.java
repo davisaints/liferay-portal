@@ -92,10 +92,10 @@ public class LangSanitizer {
 
 				Path filePath = file.toPath();
 
-				Path fileDirPath = filePath.getParent();
+				Path fileParentDir = filePath.getParent();
 
 				System.out.println(
-					"Scanning translations of " + _getModuleName(fileDirPath));
+					"Scanning translations of " + _getModuleName(fileParentDir));
 			}
 
 			Future<List<SanitizedMessage>> future = executorService.submit(
@@ -162,22 +162,22 @@ public class LangSanitizer {
 		return String.join(", ", differentWords);
 	}
 
-	private String _getModuleName(Path fileDirPath) {
-		Path dirPath = fileDirPath;
+	private String _getModuleName(Path fileParentDir) {
+		Path parentDir = fileParentDir;
 
-		while (dirPath != null) {
-			String dirName = String.valueOf(dirPath.getFileName());
+		while (parentDir != null) {
+			String dirName = String.valueOf(parentDir.getFileName());
 
 			if (dirName.equals("src")) {
-				Path moduleRootPath = dirPath.getParent();
+				Path moduleRootPath = parentDir.getParent();
 
 				return String.valueOf(moduleRootPath.getFileName());
 			}
 
-			dirPath = dirPath.getParent();
+			parentDir = parentDir.getParent();
 		}
 
-		Path moduleRootPath = fileDirPath.getParent();
+		Path moduleRootPath = fileParentDir.getParent();
 
 		return String.valueOf(moduleRootPath.getFileName());
 	}
