@@ -53,12 +53,18 @@ public class LangSanitizer {
 		langSanitizer.sanitize(
 			ArgumentsUtil.getValue(args, "source.base.dir", "./"));
 
+		System.out.println();
+
 		long endTime = System.currentTimeMillis();
 
 		Collections.sort(_sanitizedMessage, new SanitizedMessageComparator());
 
 		for (int i = 0; i < _sanitizedMessage.size(); i++) {
 			System.out.println((i + 1) + ": " + _sanitizedMessage.get(i));
+		}
+
+		if (_sanitizedMessage.isEmpty()) {
+			System.out.println("No violations were found.");
 		}
 
 		System.out.println(
@@ -79,6 +85,19 @@ public class LangSanitizer {
 			new CopyOnWriteArrayList<>();
 
 		for (File file : _getPropertiesFiles(baseDirName)) {
+			String fileName = file.getName();
+
+			if (fileName.equals("Language.properties") ||
+				fileName.equals("bundle.properties")) {
+
+				Path filePath = file.toPath();
+
+				Path fileParentDir = filePath.getParent();
+
+				System.out.println(
+					"Scanning translations of " + _getModuleName(fileParentDir));
+			}
+
 			Future<List<SanitizedMessage>> future = executorService.submit(
 				new Callable<List<SanitizedMessage>>() {
 
@@ -143,6 +162,26 @@ public class LangSanitizer {
 		return String.join(", ", differentWords);
 	}
 
+	private String _getModuleName(Path fileParentDir) {
+		Path parentDir = fileParentDir;
+
+		while (parentDir != null) {
+			String dirName = String.valueOf(parentDir.getFileName());
+
+			if (dirName.equals("src")) {
+				Path moduleRootPath = parentDir.getParent();
+
+				return String.valueOf(moduleRootPath.getFileName());
+			}
+
+			parentDir = parentDir.getParent();
+		}
+
+		Path moduleRootPath = fileParentDir.getParent();
+
+		return String.valueOf(moduleRootPath.getFileName());
+	}
+
 	private List<File> _getPropertiesFiles(String baseDirName)
 		throws Exception {
 
@@ -177,10 +216,18 @@ public class LangSanitizer {
 
 					String fileName = String.valueOf(file.getFileName());
 
-					if (fileName.endsWith(".properties") &&
-						(fileName.startsWith("bundle") ||
-						 fileName.startsWith("Language"))) {
+					if (!fileName.endsWith(".properties")) {
+						return FileVisitResult.CONTINUE;
+					}
 
+					String filePath = file.toString();
+
+					if (fileName.startsWith("Language")) {
+						if (filePath.contains("portal-language-lang")) {
+							files.add(file.toFile());
+						}
+					}
+					else if (fileName.startsWith("bundle")) {
 						files.add(file.toFile());
 					}
 
@@ -269,7 +316,7 @@ public class LangSanitizer {
 
 	private static final String[] _SKIP_DIR_NAMES = {
 		"bin", "build", "classes", "dependencies", "node_modules",
-		"node_modules_cache", "sql", "test-classes", "test-coverage",
+		"node_modules_cache", "sql", "test", "test-classes", "test-coverage",
 		"test-results", "tmp"
 	};
 
