@@ -14,6 +14,8 @@ public class LangBuilderArgs {
 		"da", "de", "fi", "ja", "nl", "pt_PT", "sv"
 	};
 
+	public static final boolean FIX_ONLY = false;
+
 	public static final String LANG_DIR_NAME = "src/content";
 
 	public static final String LANG_FILE_NAME = "Language";
@@ -38,6 +40,10 @@ public class LangBuilderArgs {
 		return _translateSubscriptionKey;
 	}
 
+	public boolean isFixOnly() {
+		return _fixOnly;
+	}
+
 	public boolean isTitleCapitalization() {
 		return _titleCapitalization;
 	}
@@ -48,6 +54,10 @@ public class LangBuilderArgs {
 
 	public void setExcludedLanguageIds(String[] excludedLanguageIds) {
 		_excludedLanguageIds = excludedLanguageIds;
+	}
+
+	public void setFixOnly(boolean fixOnly) {
+		_fixOnly = fixOnly;
 	}
 
 	public void setLangDirName(String langDirName) {
@@ -71,6 +81,7 @@ public class LangBuilderArgs {
 	}
 
 	private String[] _excludedLanguageIds = EXCLUDED_LANGUAGE_IDS;
+	private boolean _fixOnly = FIX_ONLY;
 	private String _langDirName = LANG_DIR_NAME;
 	private String _langFileName = LANG_FILE_NAME;
 	private boolean _titleCapitalization = TITLE_CAPITALIZATION;

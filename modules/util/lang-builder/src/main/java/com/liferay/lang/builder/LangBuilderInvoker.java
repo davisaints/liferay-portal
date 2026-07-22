@@ -22,7 +22,7 @@ public class LangBuilderInvoker {
 		return new LangBuilder(
 			langBuilderArgs.getExcludedLanguageIds(),
 			_getAbsolutePath(baseDir, langBuilderArgs.getLangDirName()),
-			langBuilderArgs.getLangFileName(),
+			langBuilderArgs.getLangFileName(), langBuilderArgs.isFixOnly(),
 			langBuilderArgs.isTitleCapitalization(),
 			langBuilderArgs.isTranslate(),
 			langBuilderArgs.getTranslateSubscriptionKey());

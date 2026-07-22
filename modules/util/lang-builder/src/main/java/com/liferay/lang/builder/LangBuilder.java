@@ -76,6 +76,8 @@ public class LangBuilder {
 
 		boolean buildCurrentBranch = ArgumentsUtil.getBoolean(
 			arguments, "build.current.branch", false);
+		boolean fixOnly = ArgumentsUtil.getBoolean(
+			arguments, "lang.fix.only", LangBuilderArgs.FIX_ONLY);
 
 		String[] excludedLanguageIds = StringUtil.split(
 			excludedLanguageIdsString);
@@ -85,7 +87,7 @@ public class LangBuilder {
 				arguments, "git.working.branch.name", "master");
 
 			_processCurrentBranch(
-				excludedLanguageIds, langFileName, titleCapitalization,
+				excludedLanguageIds, langFileName, fixOnly, titleCapitalization,
 				translate, translateSubscriptionKey, gitWorkingBranchName);
 
 			return;
@@ -93,7 +95,7 @@ public class LangBuilder {
 
 		try {
 			new LangBuilder(
-				excludedLanguageIds, langDirName, langFileName,
+				excludedLanguageIds, langDirName, langFileName, fixOnly,
 				titleCapitalization, translate, translateSubscriptionKey);
 		}
 		catch (Exception exception) {
@@ -103,14 +105,23 @@ public class LangBuilder {
 
 	public LangBuilder(
 			String[] excludedLanguageIds, String langDirName,
-			String langFileName, boolean titleCapitalization, boolean translate,
-			String translateSubscriptionKey)
+			String langFileName, boolean fixOnly, boolean titleCapitalization,
+			boolean translate, String translateSubscriptionKey)
 		throws Exception {
 
 		_excludedLanguageIds = excludedLanguageIds;
 		_langDirName = langDirName;
 		_langFileName = langFileName;
 		_titleCapitalization = titleCapitalization;
+
+		if (fixOnly) {
+			_renameKeys = null;
+			_translate = false;
+
+			_fixExistingTranslations();
+
+			return;
+		}
 
 		if (Validator.isNull(translateSubscriptionKey)) {
 			System.out.println(
@@ -217,7 +228,7 @@ public class LangBuilder {
 	}
 
 	private static void _processCurrentBranch(
-			String[] excludedLanguageIds, String langFileName,
+			String[] excludedLanguageIds, String langFileName, boolean fixOnly,
 			boolean titleCapitalization, boolean translate,
 			String translateSubscriptionKey, String gitWorkingBranchName)
 		throws Exception {
@@ -239,7 +250,7 @@ public class LangBuilder {
 				String langDirName = basedir + fileName.substring(0, pos + 7);
 
 				new LangBuilder(
-					excludedLanguageIds, langDirName, langFileName,
+					excludedLanguageIds, langDirName, langFileName, fixOnly,
 					titleCapitalization, translate, translateSubscriptionKey);
 			}
 		}
@@ -508,6 +519,66 @@ public class LangBuilder {
 		}
 
 		return value;
+	}
+
+	private void _fixExistingTranslations() throws Exception {
+		File langDir = new File(_langDirName);
+
+		File[] propertiesFiles = langDir.listFiles();
+
+		if (propertiesFiles == null) {
+			return;
+		}
+
+		String prefix = _langFileName + "_";
+
+		for (File propertiesFile : propertiesFiles) {
+			String name = propertiesFile.getName();
+
+			if (!name.startsWith(prefix) || !name.endsWith(".properties")) {
+				continue;
+			}
+
+			String content = _read(propertiesFile);
+
+			StringBundler sb = new StringBundler();
+
+			try (UnsyncBufferedReader unsyncBufferedReader =
+					new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+
+				String line = null;
+
+				while ((line = unsyncBufferedReader.readLine()) != null) {
+					String[] array = line.split("=", 2);
+
+					if ((array.length != 2) || line.startsWith("#") ||
+						line.startsWith("!")) {
+
+						sb.append(line);
+						sb.append("\n");
+
+						continue;
+					}
+
+					sb.append(array[0]);
+					sb.append(StringPool.EQUAL);
+					sb.append(_fixTranslation(array[1]));
+					sb.append("\n");
+				}
+			}
+
+			if (sb.index() == 0) {
+				continue;
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			String newContent = sb.toString();
+
+			if (!newContent.equals(content)) {
+				_write(propertiesFile, newContent);
+			}
+		}
 	}
 
 	private String _fixTranslation(String value) {

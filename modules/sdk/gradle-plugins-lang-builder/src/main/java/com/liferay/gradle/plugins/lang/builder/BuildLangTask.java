@@ -78,6 +78,11 @@ public class BuildLangTask extends JavaExec {
 	}
 
 	@Input
+	public boolean isFixOnly() {
+		return _fixOnly;
+	}
+
+	@Input
 	public boolean isTitleCapitalization() {
 		return _titleCapitalization;
 	}
@@ -95,6 +100,10 @@ public class BuildLangTask extends JavaExec {
 
 	public void setExcludedLanguageIds(Object... excludedLanguageIds) {
 		setExcludedLanguageIds(Arrays.asList(excludedLanguageIds));
+	}
+
+	public void setFixOnly(boolean fixOnly) {
+		_fixOnly = fixOnly;
 	}
 
 	public void setLangDir(Object langDir) {
@@ -126,6 +135,7 @@ public class BuildLangTask extends JavaExec {
 			"lang.excluded.language.ids=" +
 				StringUtil.merge(getExcludedLanguageIds(), ","));
 		args.add("lang.file=" + getLangFileName());
+		args.add("lang.fix.only=" + isFixOnly());
 		args.add("lang.title.capitalization=" + isTitleCapitalization());
 		args.add("lang.translate=" + isTranslate());
 
@@ -140,6 +150,7 @@ public class BuildLangTask extends JavaExec {
 	}
 
 	private final Set<Object> _excludedLanguageIds = new LinkedHashSet<>();
+	private boolean _fixOnly;
 	private Object _langDir;
 	private Object _langFileName = LangBuilderArgs.LANG_FILE_NAME;
 	private boolean _titleCapitalization = LangBuilderArgs.TITLE_CAPITALIZATION;

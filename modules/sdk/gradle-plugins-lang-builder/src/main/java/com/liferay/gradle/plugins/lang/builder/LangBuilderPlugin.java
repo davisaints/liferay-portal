@@ -195,6 +195,13 @@ public class LangBuilderPlugin implements Plugin<Project> {
 		}
 	}
 
+	private void _configureTaskBuildLangFixOnly(BuildLangTask buildLangTask) {
+		buildLangTask.setFixOnly(
+			GradleUtil.getProperty(
+				buildLangTask.getProject(), "lang.fix.only",
+				buildLangTask.isFixOnly()));
+	}
+
 	private void _configureTaskBuildLangForJavaLibraryPlugin(
 		final BuildLangTask buildLangTask) {
 
@@ -304,6 +311,7 @@ public class LangBuilderPlugin implements Plugin<Project> {
 				public void execute(BuildLangTask buildLangTask) {
 					_configureTaskBuildLangClasspath(
 						buildLangTask, langBuilderConfiguration);
+					_configureTaskBuildLangFixOnly(buildLangTask);
 				}
 
 			});
